@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recent_searches_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/search_empty_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/search_empty_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:contentDescription="@null"
+            app:srcCompat="@drawable/ic_search_24px" />
+
+        <TextView
+            android:id="@+id/search_empty_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/search_empty_message" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/recent_searches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/list_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="10sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/search_recent_header"
+
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/recent_searches_delete_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="end|center_vertical"
+                android:clickable="true"
+                android:contentDescription="@string/menu_clear_all_history"
+                android:focusable="true"
+                android:foreground="?attr/actionBarItemBackground"
+                android:longClickable="true"
+                android:scaleType="centerInside"
+                app:tint="@color/base30"
+                app:srcCompat="@drawable/ic_delete_white_24px" />
+
+        </FrameLayout>
+
+        <ExpandableListView
+            android:id="@+id/recent_searches_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false" />
+
+    </LinearLayout>
+
+
+</FrameLayout>

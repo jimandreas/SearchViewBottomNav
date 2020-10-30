@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="preferenceTheme">@style/AppPreferenceTheme</item>
+        <item name="editTextAutoSummarizePreferenceStyle">@style/EditTextAutoSummarizePreference</item>
+        <item name="longPreferenceStyle">@style/LongPreference</item>
+        <item name="intPreferenceStyle">@style/IntPreference</item>
+
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="actionBarTheme">@style/ToolbarTheme</item>
+        <item name="actionBarStyle">@style/ToolbarStyle</item>
+        <item name="popupTheme">@style/ToolbarPopupTheme</item>
+        <item name="actionModeStyle">@style/ActionModeStyle</item>
+
+        <item name="android:listViewStyle">@style/ListView</item>
+        <item name="android:textViewStyle">@style/RtlAwareTextView</item>
+
+        <item name="alertDialogTheme">@style/AlertDialogStyle</item>
+        <!-- Theme for dialog after long pressing on internal links -->
+        <item name="android:alertDialogTheme">@style/LongPressAlertDialogStyle</item>
+        <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button.TextButton</item>
+        <item name="maxActionInlineWidth">@dimen/snackbar_action_inline_max_dimen</item>
+        <item name="textInputStyle">@style/TextInputLayoutStyle</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+    </style>
+
+    <style name="AppTheme" parent="BaseAppTheme">
+
+    </style>
+
+
+    <style name="AppTheme.ActionBar">
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowActionBarOverlay">false</item>
+        <item name="windowActionModeOverlay">false</item>
+    </style>
+
+
+    <style name="AppTheme.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppTheme.FullScreen.TranslucentDark">
+        <item name="android:windowBackground">@color/black87</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="colorAccent">@color/accent50</item>
+    </style>
+
+
+    <style name="AlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="colorControlNormal">?attr/toolbar_icon_color</item>
+    </style>
+
+
+    <style name="ToolbarStyle" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">?attr/paper_color</item>
+        <item name="navigationIcon">?attr/homeAsUpIndicator</item>
+        <item name="elevation">0dp</item>
+        <item name="titleTextStyle">@style/ToolBarTitleText</item>
+        <item name="titleTextAppearance">@style/ToolBarTitleText</item>
+    </style>
+
+    <style name="ToolbarPopupTheme" parent="ThemeOverlay.MaterialComponents">
+        <item name="android:backgroundTint">?android:colorBackground</item>
+    </style>
+
+    <style name="BottomNavigationTextAppearanceInactive">
+        <item name="android:textSize">@dimen/bottom_nav_label_text_size</item>
+    </style>
+
+    <style name="BottomNavigationTextAppearanceActive">
+        <item name="android:textSize">@dimen/bottom_nav_label_text_size</item>
+    </style>
+
+    <style name="ToolBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">?attr/material_theme_primary_color</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="ActionModeStyle" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">?attr/paper_color</item>
+        <item name="backgroundSplit">?attr/paper_color</item>
+        <item name="titleTextStyle">@style/ActionModeTitleStyle</item>
+        <item name="subtitleTextStyle">@style/ActionModeSubtitleStyle</item>
+    </style>
+
+    <style name="PageActionModeStyle" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">?attr/paper_color</item>
+        <item name="backgroundSplit">?attr/paper_color</item>
+        <item name="titleTextStyle">@style/PageActionModeTitleStyle</item>
+        <item name="subtitleTextStyle">@style/PageActionModeSubtitleStyle</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="ActionModeTitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
+        <item name="android:textColor">?attr/material_theme_primary_color</item>
+    </style>
+
+    <style name="ActionModeSubtitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle">
+        <item name="android:textColor">?attr/material_theme_primary_color</item>
+    </style>
+
+    <style name="PageActionModeTitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
+        <item name="android:textColor">?attr/toolbar_icon_color</item>
+    </style>
+
+    <style name="PageActionModeSubtitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle">
+        <item name="android:textColor">?attr/toolbar_icon_color</item>
+    </style>
+
+
+
+    <style name="ListView" parent="@style/Widget.AppCompat.ListView">
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+    </style>
+
+    <style name="RtlAwareTextView" parent="@android:style/Widget.TextView">
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
+    <style name="TextViewCentered" parent="@android:style/Widget.TextView">
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+
+
+    <style name="SideDrawerMenuItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="OverflowMenuItem" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">13dp</item>
+        <item name="android:paddingBottom">13dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+
+
+    <style name="ThemeColorCircularButton" parent="@style/Widget.MaterialComponents.Button.Icon">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:text">Aa</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">30dp</item>
+        <item name="strokeColor">@color/accent50</item>
+    </style>
+
+    <style name="FlatButton" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="backgroundTint">?attr/color_group_22</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="rippleColor">?attr/color_group_59</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="FlatButton.Small" parent="FlatButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:insetBottom">8dp</item>
+        <item name="android:insetTop">8dp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="iconPadding">4dp</item>
+    </style>
+
+    <style name="FlatButton.Small.Transparent">
+        <item name="android:textColor">?attr/material_theme_de_emphasised_color</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:foreground">?android:selectableItemBackground</item>
+    </style>
+
+    <style name="TransparentButton" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:textAlignment">center</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="OnboardingSwitch">
+        <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="colorSwitchThumbNormal">@color/base50</item>
+        <item name="android:colorForeground">@color/base30</item>
+    </style>
+
+    <style name="AppBottomSheetModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="behavior_peekHeight">@dimen/bottomSheetPeekHeight</item>
+    </style>
+
+    <!-- Preferences -->
+
+    <style name="AppPreferenceTheme" parent="PreferenceThemeOverlay" >
+        <item name="preferenceFragmentCompatStyle">@style/AppPreferenceFragment</item>
+        <item name="android:listPreferredItemPaddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:listPreferredItemPaddingStart">@dimen/activity_horizontal_margin</item>
+        <item name="android:listPreferredItemPaddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:listPreferredItemPaddingEnd">@dimen/activity_horizontal_margin</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="colorSwitchThumbNormal">?attr/thumb_off_color</item>
+        <item name="android:colorForeground">?attr/track_off_color</item>
+        <item name="android:disabledAlpha">0.5</item>
+    </style>
+
+    <style name="AppPreferenceFragment" parent="PreferenceFragment.Material">
+        <item name="android:divider">@null</item>
+    </style>
+
+    <style name="EditTextAutoSummarizePreference" parent="Preference.DialogPreference.EditTextPreference.Material">
+        <item name="android:dialogLayout">@layout/preference_dialog_edittext</item>
+    </style>
+
+    <style name="DataStringPreference" parent="EditTextAutoSummarizePreference">
+        <item name="android:inputType">textVisiblePassword</item>
+    </style>
+
+    <style name="LongPreference" parent="EditTextAutoSummarizePreference">
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">20</item>
+        <item name="android:gravity">right|end</item>
+    </style>
+
+    <style name="IntPreference" parent="LongPreference">
+        <item name="android:maxLength">11</item>
+    </style>
+
+    <style name="ImageViewDefault">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
+
+    <style name="ImageViewDefault.ReadingListThumbnail">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+    </style>
+
+    <style name="CounterOverflowTextAppearance" parent="@style/TextAppearance.Design.Counter.Overflow">
+        <item name="android:textColor">@color/red50</item>
+    </style>
+
+    <style name="TextInputLayoutErrorTextAppearance">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="MaterialLargePrimaryTitle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/material_theme_primary_color</item>
+    </style>
+
+    <style name="MaterialMediumSecondaryCaption">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">?attr/material_theme_secondary_color</item>
+    </style>
+
+    <style name="MaterialListTitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">?attr/material_theme_primary_color</item>
+    </style>
+
+    <style name="MaterialListSubtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="android:textColor">?attr/material_theme_secondary_color</item>
+    </style>
+
+    <style name="MaterialListSectionHeader">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">?attr/material_theme_secondary_color</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="LanguageSpinnerItemTextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAlignment">inherit</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+
+    <style name="ReadingListTitleTextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">?attr/color_group_22</item>
+        <item name="android:textColorHint">?attr/material_theme_de_emphasised_color</item>
+        <item name="hintTextColor">?attr/colorAccent</item>
+        <item name="helperTextTextColor">?attr/material_theme_de_emphasised_color</item>
+        <item name="counterTextColor">?attr/material_theme_de_emphasised_color</item>
+        <item name="errorTextAppearance">@style/TextInputLayoutErrorTextAppearance</item>
+    </style>
+
+    <style name="PagePopupMenu" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:dropDownHorizontalOffset">@dimen/popup_menu_drop_down_horizontal_offset</item>
+        <item name="android:dropDownVerticalOffset">@dimen/popup_menu_drop_down_vertical_offset</item>
+    </style>
+
+    <style name="DialogTextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/material_theme_secondary_color</item>
+        <item name="android:lineSpacingExtra">@dimen/dialog_line_spacing_extra</item>
+    </style>
+
+    <style name="DialogTitleAppearance" parent="@style/RtlOverlay.DialogWindowTitle.AppCompat">
+        <item name="android:textColor">?attr/material_theme_primary_color</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="DialogTitleTextAppearance" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="CustomChipStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?attr/chip_text_color</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="ensureMinTouchTargetSize">true</item>
+        <item name="chipMinTouchTargetSize">48dp</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:colorBackground">?attr/paper_color</item>
+        <item name="android:textColorPrimary">?attr/material_theme_secondary_color</item>
+        <item name="android:windowTitleStyle">@style/DialogTitleAppearance</item>
+        <item name="android:textAppearanceMedium">@style/DialogTitleTextAppearance</item>
+        <item name="buttonBarButtonStyle">@style/AlertDialogButtonStyle</item>
+        <item name="android:lineSpacingExtra">@dimen/dialog_line_spacing_extra</item>
+    </style>
+
+    <style name="LongPressAlertDialogStyle" parent="AlertDialogStyle">
+        <item name="android:backgroundTint">?attr/paper_color</item>
+        <item name="android:background">?attr/paper_color</item>
+    </style>
+
+    <style name="DescriptionEditViewHintTextStyle">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+    </style>
+
+    <style name="PageActionTabLayoutButtonStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="drawableSize">24dp</item>
+        <item name="drawableTint">?attr/colorAccent</item>
+    </style>
+</resources>

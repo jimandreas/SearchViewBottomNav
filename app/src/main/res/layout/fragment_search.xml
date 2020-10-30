@@ -1,22 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.search.SearchFragment">
+    android:orientation="vertical"
+    tools:visibility="visible">
 
-    <TextView
-        android:id="@+id/text_search"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/paper_color"
+        android:elevation="6dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/search_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingStart="-2dp"
+            android:theme="@style/ToolbarTheme"
+            android:transitionName="@string/transition_search_bar"
+            app:navigationIcon="@drawable/ic_arrow_back_24px"
+            tools:ignore="RtlSymmetry">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
+
+            <SearchView
+                android:id="@+id/search_cab_view"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="-16dp"
+                android:layout_marginEnd="2dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:imeOptions="actionGo|flagNoExtractUi"
+                android:inputType="text"
+                app:defaultQueryHint="@string/search_hint" />
+            </LinearLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_search_results"
+            android:name="com.example.searchviewbottomnav.ui.search.SearchResultsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_search_results" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/search_panel_recent"
+            android:name="com.example.searchviewbottomnav.ui.search.RecentSearchesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_search_recent" />
+
+    </FrameLayout>
+</LinearLayout>
