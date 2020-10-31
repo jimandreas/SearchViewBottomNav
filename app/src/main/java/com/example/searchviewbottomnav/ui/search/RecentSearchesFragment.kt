@@ -1,21 +1,20 @@
 package com.example.searchviewbottomnav.ui.search
 
 import android.content.Context
+import android.database.DataSetObserver
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseExpandableListAdapter
-import android.widget.ExpandableListView
-import android.widget.FrameLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.searchviewbottomnav.R
 
 class RecentSearchesFragment : Fragment() {
 
     private lateinit var recentSearchesContainer : FrameLayout
-    private lateinit var recentSearchesList : ExpandableListView
+//    private lateinit var recentSearchesList : ExpandableListView
+    private lateinit var recentSearchesList : ListView
     private lateinit var localContext: Context
 
     private val wiredList   = mutableListOf(
@@ -54,13 +53,72 @@ class RecentSearchesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val adapter = RecentSearchesAdapter(localContext, ArrayList(wiredList))
-        recentSearchesList.setAdapter(adapter)
+        //val adapter = RecentSearchesAdapter(localContext, ArrayList(wiredList))
+        val adapter = RecentSearchesSimpleListAdapter(localContext, ArrayList(wiredList))
+        recentSearchesList.adapter = adapter
 
     }
     // magic layout inflater invocation:
     // val layoutInflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
+    class RecentSearchesSimpleListAdapter(private val context: Context, private val someList: ArrayList<String>)
+        : ListAdapter {
+
+        override fun getCount(): Int {
+            return someList.size
+        }
+
+        override fun getItem(position: Int): Any {
+            return someList[position]
+        }
+
+        override fun getItemId(position: Int): Long {
+            return 0
+        }
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            var newView = convertView
+            if (newView == null) {
+                val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                newView = layoutInflater.inflate(R.layout.item_search_recent, null)
+            }
+            (newView as TextView).text = someList[position]
+            return newView
+        }
+
+        override fun getItemViewType(position: Int): Int {
+            return 0
+        }
+
+        override fun getViewTypeCount(): Int {
+            return 1
+        }
+
+        override fun isEmpty(): Boolean {
+            return someList.isEmpty()
+        }
+
+        override fun registerDataSetObserver(observer: DataSetObserver?) {
+
+        }
+
+        override fun unregisterDataSetObserver(observer: DataSetObserver?) {
+
+        }
+        override fun hasStableIds(): Boolean {
+            return(true)
+        }
+
+        override fun isEnabled(position: Int): Boolean {
+            return(true)
+        }
+
+        override fun areAllItemsEnabled(): Boolean {
+            return(true)
+        }
+
+
+    }
     class RecentSearchesAdapter(val context: Context, val someList: ArrayList<String>)
         : BaseExpandableListAdapter() {
         override fun getGroupCount(): Int {

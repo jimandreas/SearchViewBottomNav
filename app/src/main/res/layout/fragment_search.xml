@@ -8,8 +8,8 @@
     android:orientation="vertical"
     tools:visibility="visible">
 
-<!--    problems with paper color-->
-<!--    android:background="?attr/paper_color"-->
+    <!--    problems with paper color-->
+    <!--    android:background="?attr/paper_color"-->
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -33,17 +33,17 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical">
 
-            <SearchView
-                android:id="@+id/search_cab_view"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="-16dp"
-                android:layout_marginEnd="2dp"
-                android:layout_weight="1"
-                android:focusable="true"
-                android:imeOptions="actionGo|flagNoExtractUi"
-                android:inputType="text"
-                app:defaultQueryHint="@string/search_hint" />
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view_in_fragment_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="-16dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:imeOptions="actionGo|flagNoExtractUi"
+                    android:inputType="text"
+                    app:defaultQueryHint="@string/search_hint" />
             </LinearLayout>
 
 
