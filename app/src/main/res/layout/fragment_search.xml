@@ -8,10 +8,13 @@
     android:orientation="vertical"
     tools:visibility="visible">
 
+<!--    problems with paper color-->
+<!--    android:background="?attr/paper_color"-->
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/paper_color"
+
         android:elevation="6dp">
 
         <androidx.appcompat.widget.Toolbar
