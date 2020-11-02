@@ -80,7 +80,7 @@ class RecentSearchesFragment : Fragment() {
             var newView = convertView
             if (newView == null) {
                 val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                newView = layoutInflater.inflate(R.layout.item_search_recent, null)
+                newView = layoutInflater.inflate(R.layout.fragment_search_item_textview, null)
             }
             (newView as TextView).text = someList[position]
             return newView
@@ -153,7 +153,7 @@ class RecentSearchesFragment : Fragment() {
             var newView = convertView
             if (newView == null) {
                 val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                newView = layoutInflater.inflate(R.layout.item_search_recent, null)
+                newView = layoutInflater.inflate(R.layout.fragment_search_item_textview, null)
             }
             return newView!!
         }
@@ -162,7 +162,7 @@ class RecentSearchesFragment : Fragment() {
             var newView = convertView
             if (newView == null) {
                 val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                newView = layoutInflater.inflate(R.layout.item_search_recent, null)
+                newView = layoutInflater.inflate(R.layout.fragment_search_item_textview, null)
             }
             (newView as TextView).text = someList[childPosition]
             return newView
