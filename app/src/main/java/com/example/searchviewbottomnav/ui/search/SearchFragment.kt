@@ -22,13 +22,14 @@ class SearchFragment : Fragment() , RecentSearchesFragment.Callback {
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         toolbar = root.findViewById(R.id.search_toolbar)
         searchView = root.findViewById(R.id.search_view_in_fragment_search)
+        //searchView!!.setIconifiedByDefault(false)
         val childFragmentManager = childFragmentManager
         recentSearchesFragment = childFragmentManager.findFragmentById(
                 R.id.search_panel_recent) as RecentSearchesFragment?
         recentSearchesFragment!!.setCallback(this)
         searchResultsFragment = childFragmentManager.findFragmentById(
                 R.id.fragment_search_results) as SearchResultsFragment?
-        toolbar.setNavigationOnClickListener(View.OnClickListener { v: View? -> requireActivity().supportFinishAfterTransition() })
+        toolbar.setNavigationOnClickListener(View.OnClickListener { })
 
 
         //initSearchView()

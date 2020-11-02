@@ -8,5 +8,6 @@
     android:gravity="center_vertical"
     android:paddingStart="16dp"
     android:textSize="20sp"
-    android:textColor="@color/black"
-    tools:text="Sample recent search term" />
+    android:textColor="@color/white"
+    tools:text="Sample recent search term"
+    tools:ignore="RtlSymmetry" />

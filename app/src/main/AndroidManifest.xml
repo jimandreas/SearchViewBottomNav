@@ -22,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.fruit.FruitActivity"
+            android:parentActivityName="com.example.searchviewbottomnav.MainActivity"
+            />
+
     </application>
 
 </manifest>

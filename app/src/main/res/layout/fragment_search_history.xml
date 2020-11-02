@@ -22,7 +22,6 @@
 
         <TextView
             android:id="@+id/history_empty_title"
-            style="@style/MaterialLargePrimaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -33,7 +32,6 @@
 
         <TextView
             android:id="@+id/history_empty_message"
-            style="@style/MaterialMediumSecondaryCaption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
