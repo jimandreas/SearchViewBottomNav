@@ -15,7 +15,7 @@ import com.example.searchviewbottomnav.R
 import java.util.*
 
 /** [SearchView] that exposes contextual action bar callbacks.  */
-class CustomSearchView @JvmOverloads constructor(
+class SearchCustomView @JvmOverloads constructor(
         context: Context?,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = /*R.attr.searchViewStyle*/androidx.appcompat.R.attr.searchViewStyle

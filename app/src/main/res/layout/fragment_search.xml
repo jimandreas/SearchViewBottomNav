@@ -40,7 +40,7 @@
 
                 >
 
-                <com.example.searchviewbottomnav.ui.search.CustomSearchView
+                <com.example.searchviewbottomnav.ui.search.SearchCustomView
                     android:id="@+id/search_view_in_fragment_search"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
