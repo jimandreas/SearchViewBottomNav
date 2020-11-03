@@ -10,4 +10,15 @@ class SearchViewModel : ViewModel() {
         value = "This is search Fragment"
     }
     val text: LiveData<String> = _text
+
+
+    private val _previousSearchStringList = MutableLiveData<List<String>>().apply {
+        value = listOf("")
+
+    }
+    val previousSearchStringList: LiveData<List<String>> = _previousSearchStringList
+
+    fun updateSearchStringList(newSearchString: String) {
+
+    }
 }

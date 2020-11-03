@@ -8,20 +8,22 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.searchviewbottomnav.R
 import com.example.searchviewbottomnav.ui.search.SearchFragment.Phase.INITIAL
 import kotlinx.android.synthetic.main.fragment_search_results.*
 import timber.log.Timber
 
-class SearchFragment : Fragment() , RecentSearchesFragment.Callback {
+class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
 
-    private lateinit var searchViewModel: SearchViewModel // not used currently
+    private lateinit var searchViewModel: SearchViewModel
     private lateinit var recentSearchesFragment: RecentSearchesFragment
     private lateinit var searchResultsFragment: SearchResultsFragment
-    private lateinit var searchView : SearchView
-    private lateinit var toolbar : androidx.appcompat.widget.Toolbar
+    private lateinit var searchView: SearchView
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
 
-    private lateinit var phase : Phase
+
+    private lateinit var phase: Phase
 
     enum class Phase(val current: Int) {
         INITIAL(0),
@@ -30,7 +32,11 @@ class SearchFragment : Fragment() , RecentSearchesFragment.Callback {
         DISPLAY_SELECTED_ITEM(3)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         phase = INITIAL
         val root = inflater.inflate(R.layout.fragment_search, container, false)
@@ -39,32 +45,40 @@ class SearchFragment : Fragment() , RecentSearchesFragment.Callback {
         // this dismisses the keyboard on a click of toolbar back arrow
         toolbar.setNavigationOnClickListener(View.OnClickListener { searchView.clearFocus() })
 
+        searchViewModel =
+            ViewModelProvider(this).get(SearchViewModel::class.java)
+
         // two sub-tiles - one for previous searches and one for search matches
         val childFragmentManager = childFragmentManager
         recentSearchesFragment = childFragmentManager.findFragmentById(
-                R.id.search_panel_recent) as RecentSearchesFragment
+            R.id.search_panel_recent
+        ) as RecentSearchesFragment
         recentSearchesFragment.setCallback(this)
         searchResultsFragment = childFragmentManager.findFragmentById(
-                R.id.fragment_search_results) as SearchResultsFragment
+            R.id.fragment_search_results
+        ) as SearchResultsFragment
+        recentSearchesFragment.setViewModel(searchViewModel)
+        searchResultsFragment.setViewModel(searchViewModel)
 
         searchView.setOnQueryTextListener(searchQueryListener)
 
         return root
     }
 
-    private val searchQueryListener: SearchView.OnQueryTextListener = object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(queryText: String): Boolean {
-            Timber.v("Submit text: $queryText")
-            return true
-        }
+    private val searchQueryListener: SearchView.OnQueryTextListener =
+        object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(queryText: String): Boolean {
+                Timber.v("Submit text: $queryText")
+                return true
+            }
 
-        override fun onQueryTextChange(queryText: String): Boolean {
+            override fun onQueryTextChange(queryText: String): Boolean {
 //            searchView.setCloseButtonVisibility(queryText)
-            val searchString = queryText.trim { it <= ' ' }
-            startSearch(searchString, false)
-            return true
+                val searchString = queryText.trim { it <= ' ' }
+                startSearch(searchString, false)
+                return true
+            }
         }
-    }
 
     override fun onStart() {
         super.onStart()
@@ -124,7 +138,6 @@ class SearchFragment : Fragment() , RecentSearchesFragment.Callback {
 
         searchResultsFragment.startSearch(term, force)
     }
-
 
 
     private fun getActivePanel(): Int {

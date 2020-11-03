@@ -2,7 +2,12 @@ package com.example.searchviewbottomnav.ui.fruit
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.bumptech.glide.Glide
+import com.example.searchviewbottomnav.Fruits
 import com.example.searchviewbottomnav.MainActivity
 import com.example.searchviewbottomnav.R
 
@@ -12,11 +17,25 @@ class FruitActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fruit)
-        setSupportActionBar(findViewById(R.id.toolbar))
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        //val toolbar: Toolbar = findViewById(R.id.toolbar)
+        //setSupportActionBar(toolbar)
+        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val fruitName = intent.getStringExtra(EXTRA_NAME)
-        val fruitUrl = intent.getStringExtra(EXTRA_URL)
+        if (fruitName != null) {
+            val url = Fruits.getUrl(fruitName)
+            loadBackdrop(url)
+            val textView = findViewById<TextView>(R.id.fruit_name_text_view)
+            textView!!.text = fruitName
+        }
+    }
+
+    private fun loadBackdrop(url:String) {
+        val imageView: ImageView = findViewById(R.id.backdrop)
+        Glide.with(this)
+            .load(url)
+            .centerCrop()
+            .into(imageView)
 
     }
 
@@ -28,6 +47,5 @@ class FruitActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_NAME = "fruitname"
-        const val EXTRA_URL = "fruiturl"
     }
 }

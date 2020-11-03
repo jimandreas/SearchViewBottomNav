@@ -1,6 +1,7 @@
 package com.example.searchviewbottomnav.ui.search
 
 import android.content.Context
+import android.content.Intent
 import android.database.DataSetObserver
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,30 +10,31 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.searchviewbottomnav.R
+import com.example.searchviewbottomnav.ui.fruit.FruitActivity
+import com.example.searchviewbottomnav.util.PrefsUtil
 
 class RecentSearchesFragment : Fragment() {
 
+    private lateinit var searchViewModel: SearchViewModel
     private lateinit var recentSearchesContainer : FrameLayout
 //    private lateinit var recentSearchesList : ExpandableListView
     private lateinit var recentSearchesList : ListView
+
     private lateinit var localContext: Context
 
-    private val wiredList   = mutableListOf(
+    private var wiredList   = mutableListOf(
             "apple",
             "orange",
-            "banana",
-            "grape",
-            "kiwifruit",
-            "melon",
-            "durian",
-            "apricot",
-            "blueberry",
-            "marionberry",
-            "blackberry",
-            "peach",
-            "strawberry",
-            "raspberry"
+            "banana"
     )
+
+    fun addRecentSearchString(searchStringToAdd: String) {
+        wiredList.add(1, searchStringToAdd)
+    }
+
+    fun clearRecentSearchStringList() {
+        wiredList.clear()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_search_recent, container, false)
@@ -40,7 +42,25 @@ class RecentSearchesFragment : Fragment() {
 
         recentSearchesContainer = root.findViewById(R.id.recent_searches_container)
         recentSearchesList = root.findViewById(R.id.recent_searches_list)
+
+        val previousSet = PrefsUtil.getStringSet(
+                PrefsUtil.PREVIOUS_SEARCHES_KEY,
+                setOf(""))
+        wiredList.clear()
+        if (previousSet != null) {
+            wiredList = previousSet.toMutableList()
+        }
+
+        val recentSearchesDeleteButton = root.findViewById<ImageView>(R.id.recent_searches_delete_button)
+        recentSearchesDeleteButton?.setOnClickListener { _ ->
+            wiredList.clear()
+        }
+
         return root
+    }
+
+    fun setViewModel(viewModel: SearchViewModel) {
+        searchViewModel = viewModel
     }
 
     fun show() {
@@ -56,6 +76,11 @@ class RecentSearchesFragment : Fragment() {
         //val adapter = RecentSearchesAdapter(localContext, ArrayList(wiredList))
         val adapter = RecentSearchesSimpleListAdapter(localContext, ArrayList(wiredList))
         recentSearchesList.adapter = adapter
+
+        searchViewModel.previousSearchStringList.observe(viewLifecycleOwner, {
+            val searchList = it
+            wiredList = searchList!!.toMutableList()
+        })
 
     }
     // magic layout inflater invocation:
@@ -83,6 +108,14 @@ class RecentSearchesFragment : Fragment() {
                 newView = layoutInflater.inflate(R.layout.fragment_search_item_textview, null)
             }
             (newView as TextView).text = someList[position]
+
+            newView.setOnClickListener { v ->
+                val context = v.context
+                val intent = Intent(context, FruitActivity::class.java)
+                val fruitName = (v as TextView).text
+                intent.putExtra(FruitActivity.EXTRA_NAME, fruitName)
+                context.startActivity(intent)
+            }
             return newView
         }
 
@@ -116,9 +149,14 @@ class RecentSearchesFragment : Fragment() {
         override fun areAllItemsEnabled(): Boolean {
             return(true)
         }
-
-
     }
+
+    /**
+     *  this is a BaseExpandableListAdapter
+     *  See https://github.com/bijayy/FirstSearchDemo
+     *  for an example
+     *  It is not used currently but did work at one time.
+     */
     class RecentSearchesAdapter(val context: Context, val someList: ArrayList<String>)
         : BaseExpandableListAdapter() {
         override fun getGroupCount(): Int {

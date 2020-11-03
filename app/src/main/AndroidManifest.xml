@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.searchviewbottomnav">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="com.example.searchviewbottomnav.MainApplication"
         android:allowBackup="true"

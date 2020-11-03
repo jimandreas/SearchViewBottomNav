@@ -17,4 +17,6 @@ object PrefsUtil {
         val prefs = PreferenceManager.getDefaultSharedPreferences(prefsContext)
         prefs.edit().putStringSet(key, value).apply()
     }
+
+    const val PREVIOUS_SEARCHES_KEY = "psk"
 }

@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment
 import com.example.searchviewbottomnav.Fruits
 import com.example.searchviewbottomnav.R
 import com.example.searchviewbottomnav.ui.fruit.FruitActivity
+import com.example.searchviewbottomnav.util.PrefsUtil
 
 class SearchResultsFragment : Fragment() {
 
-    private lateinit var searchResultsDisplay : FrameLayout
-    private lateinit var recyclerView : androidx.recyclerview.widget.RecyclerView
+    private lateinit var searchViewModel: SearchViewModel
+    private lateinit var searchResultsDisplay: FrameLayout
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
     private lateinit var adapterInUse: SimpleStringRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,11 +32,16 @@ class SearchResultsFragment : Fragment() {
         searchSuggestion!!.text = "YOUR RESULTS HERE"
 
         adapterInUse = SimpleStringRecyclerViewAdapter(root.context, listOf(""))
+        adapterInUse.setViewModel(searchViewModel)
         with(recyclerView) {
             layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
             adapter = adapterInUse
         }
         return root
+    }
+
+    fun setViewModel(viewModel: SearchViewModel) {
+        searchViewModel = viewModel
     }
 
     fun show() {
@@ -47,21 +54,27 @@ class SearchResultsFragment : Fragment() {
 
     fun startSearch(searchTerm: String, force: Boolean) {
         val matches = Fruits.searchFruit(searchTerm)
-        val matchNames = matches.map{ it.name}
+        val matchNames = matches.map { it.name }
         adapterInUse.updateStringList(matchNames)
         adapterInUse.notifyDataSetChanged()
     }
 
-    class SimpleStringRecyclerViewAdapter(context: Context, private val valuesIn: List<String>) : androidx.recyclerview.widget.RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder>() {
+    class SimpleStringRecyclerViewAdapter(context: Context, private val valuesIn: List<String>)
+        : androidx.recyclerview.widget.RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder>() {
 
         private val typedValue = TypedValue()
         private val backgroundResourceId: Int
         private var stringListToDisplay = valuesIn
+        lateinit var searchViewModel: SearchViewModel
 
         class ViewHolder(val theView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(theView) {
             lateinit var boundString: String
             val textView: TextView = theView.findViewById(R.id.fragment_search_text)
-               as TextView
+                    as TextView
+        }
+
+        fun setViewModel(model: SearchViewModel) {
+            searchViewModel = model
         }
 
         fun updateStringList(newList: List<String>) {
@@ -88,12 +101,30 @@ class SearchResultsFragment : Fragment() {
             holder.boundString = stringListToDisplay[position]
             holder.textView.text = stringListToDisplay[position]
 
-            holder.theView.setOnClickListener { v ->
+            holder.textView.setOnClickListener { v ->
                 val context = v.context
                 val intent = Intent(context, FruitActivity::class.java)
-                intent.putExtra(FruitActivity.EXTRA_NAME, holder.boundString)
+                val fruitName = holder.boundString
+                intent.putExtra(FruitActivity.EXTRA_NAME, fruitName)
+
+                searchViewModel.updateSearchStringList(fruitName)
+
+                val oldSet = PrefsUtil.getStringSet(
+                        PrefsUtil.PREVIOUS_SEARCHES_KEY,
+                        setOf(""))
+                var newSet = mutableSetOf("")
+                if (oldSet == null) {
+                    newSet = mutableSetOf(fruitName)
+                } else {
+                    newSet = oldSet.toMutableSet()
+                    newSet.add(fruitName)
+                }
+                PrefsUtil.setStringSet(
+                        PrefsUtil.PREVIOUS_SEARCHES_KEY,
+                        newSet)
 
                 context.startActivity(intent)
+
             }
 
         }
