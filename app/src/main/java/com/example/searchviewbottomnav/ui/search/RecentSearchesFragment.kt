@@ -32,11 +32,12 @@ class RecentSearchesFragment : Fragment() {
 
         val previousSet = PrefsUtil.getStringSet(
                 PrefsUtil.PREVIOUS_SEARCHES_KEY,
-                setOf(""))
-        if (previousSet != null) {
+                emptySet())
+        if (previousSet != null && previousSet.isNotEmpty()) {
             wiredList = previousSet.toMutableList()
         } else {
-            wiredList = mutableListOf("")
+            wiredList = arrayListOf()
+            wiredList.clear()
         }
 
         val newAdapter = ArrayAdapter(
