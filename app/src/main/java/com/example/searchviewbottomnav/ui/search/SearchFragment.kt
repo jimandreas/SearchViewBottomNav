@@ -11,14 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.searchviewbottomnav.R
 import com.example.searchviewbottomnav.ui.search.SearchFragment.Phase.INITIAL
-import kotlinx.android.synthetic.main.fragment_search_results.*
+
 import timber.log.Timber
 
 class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
 
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var recentSearchesFragment: RecentSearchesFragment
-    private lateinit var searchResultsFragment: SearchResultsFragment
+    private lateinit var searchMatchesFragment: SearchMatchesFragment
     private lateinit var searchView: SearchView
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
 
@@ -51,14 +51,14 @@ class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
         // two sub-tiles - one for previous searches and one for search matches
         val childFragmentManager = childFragmentManager
         recentSearchesFragment = childFragmentManager.findFragmentById(
-            R.id.search_panel_recent
+            R.id.search_container_recent
         ) as RecentSearchesFragment
         recentSearchesFragment.setCallback(this)
-        searchResultsFragment = childFragmentManager.findFragmentById(
-            R.id.fragment_search_results
-        ) as SearchResultsFragment
+        searchMatchesFragment = childFragmentManager.findFragmentById(
+            R.id.search_container_matches
+        ) as SearchMatchesFragment
         recentSearchesFragment.setViewModel(searchViewModel)
-        searchResultsFragment.setViewModel(searchViewModel)
+        searchMatchesFragment.setViewModel(searchViewModel)
 
         searchView.setOnQueryTextListener(searchQueryListener)
 
@@ -101,12 +101,12 @@ class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
     private fun showPanel(panel: Int) {
         when (panel) {
             PANEL_RECENT_SEARCHES -> {
-                searchResultsFragment.hide()
+                searchMatchesFragment.hide()
                 recentSearchesFragment.show()
             }
             PANEL_SEARCH_RESULTS -> {
                 recentSearchesFragment.hide()
-                searchResultsFragment.show()
+                searchMatchesFragment.show()
             }
             else -> {
             }
@@ -136,12 +136,12 @@ class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
 //            return
 //        }
 
-        searchResultsFragment.startSearch(term, force)
+        searchMatchesFragment.startSearch(term, force)
     }
 
 
     private fun getActivePanel(): Int {
-        return if (searchResultsFragment.search_results_display.visibility == VISIBLE) {
+        return if (searchMatchesFragment.isShowing()) {
             PANEL_SEARCH_RESULTS
         } else {
             //otherwise, the recent searches must be showing:

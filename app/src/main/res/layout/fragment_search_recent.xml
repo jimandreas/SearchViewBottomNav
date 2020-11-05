@@ -3,9 +3,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recent_searches_container"
+    android:id="@+id/recent_searches_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
 
     <LinearLayout
         android:id="@+id/search_empty_container"
@@ -73,11 +75,11 @@
                 android:longClickable="true"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/ic_delete_white_24px"
-                app:tint="@color/base30" />
+                />
 
         </FrameLayout>
-
-<!--        works - now trying simple list view-->
+        
+        <!--        works - now trying simple list view-->
         <!--        <ExpandableListView-->
 
         <ListView

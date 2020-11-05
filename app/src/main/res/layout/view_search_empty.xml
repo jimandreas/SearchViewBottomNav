@@ -9,7 +9,6 @@
         android:layout_gravity="center"
         android:contentDescription="@null"
         android:padding="20dp"
-        app:tint="@color/base30"
         app:srcCompat="@drawable/ic_search_24px" />
 
     <TextView

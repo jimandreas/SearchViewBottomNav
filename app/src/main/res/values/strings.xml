@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">SearchViewBottomNav</string>
+    <!--<string name="app_name">SearchViewBottomNav</string>-->
+
+    <!--prepend with 0 as the Pixel does not allow sorting apps by date-->
+    <string name="app_name">0SearchView</string>
     <string name="app_title">Search View with Bottom Navigation</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>

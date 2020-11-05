@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.*
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -15,7 +16,7 @@ import com.example.searchviewbottomnav.R
 import com.example.searchviewbottomnav.ui.fruit.FruitActivity
 import com.example.searchviewbottomnav.util.PrefsUtil
 
-class SearchResultsFragment : Fragment() {
+class SearchMatchesFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var searchResultsDisplay: FrameLayout
@@ -23,9 +24,9 @@ class SearchResultsFragment : Fragment() {
     private lateinit var adapterInUse: SimpleStringRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.fragment_search_results, container, false)
+        val root = inflater.inflate(R.layout.fragment_search_matches, container, false)
 
-        searchResultsDisplay = root.findViewById(R.id.search_results_display)
+        searchResultsDisplay = root.findViewById(R.id.search_results_matches_frame_layout)
         recyclerView = root.findViewById(R.id.search_results_list)
 
         val searchSuggestion = root.findViewById<TextView>(R.id.search_suggestion)
@@ -45,11 +46,16 @@ class SearchResultsFragment : Fragment() {
     }
 
     fun show() {
-        searchResultsDisplay.visibility = View.VISIBLE
+        searchResultsDisplay.visibility = VISIBLE
     }
 
     fun hide() {
-        searchResultsDisplay.visibility = View.GONE
+        searchResultsDisplay.visibility = INVISIBLE
+        //searchResultsDisplay.visibility = GONE
+    }
+
+    fun isShowing(): Boolean {
+        return searchResultsDisplay.visibility == VISIBLE
     }
 
     fun startSearch(searchTerm: String, force: Boolean) {

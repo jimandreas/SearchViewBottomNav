@@ -18,7 +18,7 @@ import java.util.*
 class SearchCustomView @JvmOverloads constructor(
         context: Context?,
         attrs: AttributeSet? = null,
-        defStyleAttr: Int = /*R.attr.searchViewStyle*/androidx.appcompat.R.attr.searchViewStyle
+        defStyleAttr: Int = R.attr.searchViewStyle
 ) : SearchView(
         context!!, attrs, defStyleAttr
 ) {
@@ -60,16 +60,16 @@ class SearchCustomView @JvmOverloads constructor(
 
     init {
 
-        val whiteColor = resources.getColor(R.color.white)
+
         searchSrcTextView = findViewById(R.id.search_src_text)
-        searchSrcTextView!!.setTextColor(whiteColor)
+
         searchSrcTextView!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, SEARCH_TEXT_SIZE.toFloat())
-        searchSrcTextView!!.setHintTextColor(whiteColor)
+
         val searchMagIcon = findViewById<ImageView>(R.id.search_mag_icon)
-        searchMagIcon.setColorFilter(whiteColor)
+
         searchCloseBtn = findViewById(R.id.search_close_btn)
         searchCloseBtn.visibility = GONE
-        searchCloseBtn.setColorFilter(whiteColor)
+
         //FeedbackUtil.setButtonLongPressToast(searchCloseBtn)
 
     }

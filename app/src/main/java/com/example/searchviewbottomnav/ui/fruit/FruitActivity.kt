@@ -17,9 +17,8 @@ class FruitActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fruit)
-        //val toolbar: Toolbar = findViewById(R.id.toolbar)
-        //setSupportActionBar(toolbar)
-        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        title = "Your selection here"
+
 
         val fruitName = intent.getStringExtra(EXTRA_NAME)
         if (fruitName != null) {
