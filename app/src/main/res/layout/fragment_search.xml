@@ -5,8 +5,8 @@
     android:id="@+id/search_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="?attr/colorSurface"
+    android:orientation="vertical"
     tools:visibility="visible">
 
     <FrameLayout
@@ -18,34 +18,35 @@
             android:id="@+id/search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="-2dp"
+            android:clipChildren="false"
+            android:paddingLeft="@dimen/list_item_header_padding"
+            android:paddingRight="@dimen/list_item_header_padding"
             app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_arrow_back_white_24px"
-            tools:ignore="RtlSymmetry">
+            app:navigationIcon="@drawable/ic_arrow_back_24px">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical">
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <com.example.searchviewbottomnav.ui.search.SearchCustomView
+                <EditText
                     android:id="@+id/search_view_in_fragment_search"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="-20dp"
-                    android:layout_marginEnd="2dp"
                     android:layout_weight="1"
-                    android:focusable="true"
-                    android:imeOptions="actionGo|flagNoExtractUi"
-                    android:inputType="text"
-                    app:defaultQueryHint="@string/search_hint"
-                    app:iconifiedByDefault="false"
+                    android:background="@null"
+                    android:hint="@string/search_hint"
+                    android:imeOptions="flagNoExtractUi|actionSearch"
+                    android:inputType="textNoSuggestions" />
 
-                    />
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/actionBarItemBackground"
+                    android:padding="@dimen/list_item_horizontal_padding"
+                    app:srcCompat="@drawable/ic_delete_24px" />
             </LinearLayout>
-
-
         </androidx.appcompat.widget.Toolbar>
 
     </FrameLayout>
