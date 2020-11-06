@@ -16,13 +16,14 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/search_toolbar"
+            android:theme="@style/SearchViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:paddingLeft="@dimen/list_item_header_padding"
             android:paddingRight="@dimen/list_item_header_padding"
             app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_arrow_back_grey_24px">
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
