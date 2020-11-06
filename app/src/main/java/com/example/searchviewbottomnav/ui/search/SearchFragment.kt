@@ -2,24 +2,31 @@ package com.example.searchviewbottomnav.ui.search
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.searchviewbottomnav.R
 import com.example.searchviewbottomnav.ui.search.SearchFragment.Phase.INITIAL
-
+import com.example.searchviewbottomnav.util.Util.hideSoftKeyboard
 import timber.log.Timber
 
-class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
+class SearchFragment :
+    Fragment(),
+    SearchMatchesFragment.Callback,
+    TextView.OnEditorActionListener{
 
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var recentSearchesFragment: RecentSearchesFragment
     private lateinit var searchMatchesFragment: SearchMatchesFragment
-    private lateinit var searchView: SearchView
+    private lateinit var searchEditText: EditText
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
 
 
@@ -41,9 +48,9 @@ class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
         phase = INITIAL
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         toolbar = root.findViewById(R.id.search_toolbar)
-        searchView = root.findViewById(R.id.search_view_in_fragment_search)
+        searchEditText = root.findViewById(R.id.edittext_in_fragment_search)
         // this dismisses the keyboard on a click of toolbar back arrow
-        toolbar.setNavigationOnClickListener(View.OnClickListener { searchView.clearFocus() })
+        toolbar.setNavigationOnClickListener(View.OnClickListener { hideSoftKeyboard(toolbar) })
 
         searchViewModel =
             ViewModelProvider(this).get(SearchViewModel::class.java)
@@ -53,32 +60,53 @@ class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
         recentSearchesFragment = childFragmentManager.findFragmentById(
             R.id.search_container_recent
         ) as RecentSearchesFragment
-        recentSearchesFragment.setCallback(this)
+
         searchMatchesFragment = childFragmentManager.findFragmentById(
             R.id.search_container_matches
         ) as SearchMatchesFragment
+        searchMatchesFragment.setCallback(this)
         recentSearchesFragment.setViewModel(searchViewModel)
         searchMatchesFragment.setViewModel(searchViewModel)
 
-        searchView.setOnQueryTextListener(searchQueryListener)
+        searchEditText.setOnEditorActionListener(this)
+        searchEditText.doOnTextChanged { text, start, before, count ->
+            //Timber.i("onTextChanged: $text, $start, $before, $count")
+            if (text != null) {
+                val searchString = text.trim { it <= ' ' }
+                startSearch(searchString.toString(), false)
+            }
+        }
+
+        val clearButton = root.findViewById<ImageView>(R.id.clear_button_in_fragment_search)
+        clearButton.setOnClickListener(View.OnClickListener {
+            searchEditText.text.clear()
+        })
 
         return root
     }
 
-    private val searchQueryListener: SearchView.OnQueryTextListener =
-        object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(queryText: String): Boolean {
-                Timber.v("Submit text: $queryText")
-                return true
-            }
 
-            override fun onQueryTextChange(queryText: String): Boolean {
-//            searchView.setCloseButtonVisibility(queryText)
-                val searchString = queryText.trim { it <= ' ' }
-                startSearch(searchString, false)
-                return true
-            }
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        when (actionId) {
+            EditorInfo.IME_ACTION_SEND -> Timber.i("SEND")
+            EditorInfo.IME_ACTION_DONE -> Timber.i("DONE")
+            EditorInfo.IME_ACTION_SEARCH -> Timber.i("SEARCH")
         }
+        return true
+    }
+
+
+            /* override fun onQueryTextSubmit(queryText: String): Boolean {
+                 Timber.v("Submit text: $queryText")
+                 return true
+             }
+
+             override fun onQueryTextChange(queryText: String): Boolean {
+ //            searchView.setCloseButtonVisibility(queryText)
+                 val searchString = queryText.trim { it <= ' ' }
+                 startSearch(searchString, false)
+                 return true
+             }*/
 
     override fun onStart() {
         super.onStart()
@@ -86,8 +114,8 @@ class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
         phase = INITIAL
     }
 
-    override fun switchToSearch(text: String) {
-        TODO("Not yet implemented")
+    override fun clearKeyboard() {
+        hideSoftKeyboard(toolbar)
     }
 
     /**
@@ -153,4 +181,6 @@ class SearchFragment : Fragment(), RecentSearchesFragment.Callback {
         private const val PANEL_RECENT_SEARCHES = 0
         private const val PANEL_SEARCH_RESULTS = 1
     }
+
+
 }

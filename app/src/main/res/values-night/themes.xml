@@ -14,9 +14,7 @@
 
     </style>
 
-    <style name="SearchViewStyle" parent="@style/Widget.AppCompat.SearchView">
-        <item name="closeIcon">@drawable/ic_arrow_back_white_24px</item>
-<!--        <item name="searchIcon">@drawable/ic_search_main_themed_24dp</item>
-        <item name="searchHintIcon">@drawable/ic_search_main_themed_24dp</item>-->
+    <style name="SearchViewStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="navigationIcon">@drawable/ic_arrow_back_white_24px</item>
     </style>
 </resources>
