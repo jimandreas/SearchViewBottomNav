@@ -2,14 +2,14 @@
 
 repo: https://github.com/jimandreas/SearchViewBottomNav
 
-This repo was doing to develope a SearchView based search facility.
-**_BUT_** It has now pivoted to developing search functionality 
+This repo was intended to develop a SearchView based search facility.
+**_BUT_** it has now pivoted to developing search functionality
 using an EditText widget.   The demonstration app is composed 
 using a [bottom navigation] bar as the User Interface (UI) framework. 
 
 Code credits:
 
-* Android Studio Bottom Navigation Bar template
+* Android Studio Bottom Navigation Bar [template]
 
 It is coded in Kotlin and is based on the `BottomNavigationBar` "Hello World" template
 as kindly provided in Android Studio 4.1.
@@ -51,6 +51,7 @@ Demonstrates what this app has implemented:<br>
 
 [wikipedia app in github]: https://github.com/wikimedia/apps-android-wikipedia
 [bottom navigation]: https://material.io/components/bottom-navigation
+[template]: https://developer.android.com/studio/projects/templates#BottomNavActivity
 [cheesesquare]: https://github.com/chrisbanes/cheesesquare
 [Reply material components android example]: https://github.com/material-components/material-components-android-examples
 [imgur]: https://imgur.com/
