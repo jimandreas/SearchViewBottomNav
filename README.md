@@ -23,9 +23,8 @@ as of October 2020.
 
 * [cheesesquare]
 
-The design also the collapsing toolbar view for the fruit activity.  The link above 
-references the github repo
-authored by @chrisbanes.
+The design uses the collapsing toolbar view for the fruit activity.  The link above
+references the github repo authored by @chrisbanes.
 
 * [Reply material components android example]
 
