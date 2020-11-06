@@ -1,4 +1,4 @@
-@file:Suppress("UNUSED_ANONYMOUS_PARAMETER", "LiftReturnOrAssignment")
+@file:Suppress("UNUSED_ANONYMOUS_PARAMETER", "LiftReturnOrAssignment", "RedundantSamConstructor", "ImplicitThis", "ImplicitThis", "RedundantLambdaArrow")
 
 package com.example.searchviewbottomnav.ui.search
 
@@ -6,7 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -17,10 +18,10 @@ import com.example.searchviewbottomnav.util.PrefsUtil
 class RecentSearchesFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
-    private lateinit var recentSearchesContainer : FrameLayout
-    private lateinit var recentSearchesList : ListView
-    private lateinit var recentSearchesDeleteButton : ImageView
-    private lateinit var wiredList : MutableList<String>
+    private lateinit var recentSearchesContainer: FrameLayout
+    private lateinit var recentSearchesList: ListView
+    private lateinit var recentSearchesDeleteButton: ImageView
+    private lateinit var wiredList: MutableList<String>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_search_recent, container, false)
@@ -62,9 +63,9 @@ class RecentSearchesFragment : Fragment() {
             intent.putExtra(FruitActivity.EXTRA_NAME, fruitName)
             requireContext().startActivity(intent)
         }
-
         return root
     }
+
 
     fun setViewModel(viewModel: SearchViewModel) {
         searchViewModel = viewModel
@@ -78,13 +79,5 @@ class RecentSearchesFragment : Fragment() {
         recentSearchesContainer.visibility = INVISIBLE
     }
 
-    fun setCallback(callbackIn: Callback) {
-        callback = callbackIn
-    }
 
-    interface Callback {
-        fun switchToSearch(text: String)
-    }
-
-    private var callback: Callback? = null
 }

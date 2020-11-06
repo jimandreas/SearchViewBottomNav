@@ -10,9 +10,11 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.searchviewbottomnav.Fruits
 import com.example.searchviewbottomnav.R
 import com.example.searchviewbottomnav.ui.fruit.FruitActivity
@@ -37,6 +39,15 @@ class SearchMatchesFragment : Fragment() {
             layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
             adapter = adapterInUse
         }
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (callback != null && dy > 0) {
+                    callback!!.clearKeyboard()
+                }
+            }
+        })
         return root
     }
 
@@ -127,4 +138,14 @@ class SearchMatchesFragment : Fragment() {
             return stringListToDisplay.size
         }
     }
+
+    fun setCallback(callbackIn: Callback) {
+        callback = callbackIn
+    }
+
+    interface Callback {
+        fun clearKeyboard()
+    }
+
+    private var callback: Callback? = null
 }
