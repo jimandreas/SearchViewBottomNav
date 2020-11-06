@@ -1,3 +1,5 @@
+@file:Suppress("RedundantSamConstructor")
+
 package com.example.searchviewbottomnav.ui.settings
 
 import android.os.Bundle

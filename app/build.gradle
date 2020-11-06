@@ -6,8 +6,8 @@ apply plugin: 'kotlin-kapt'
 
 def versionMajor = 1
 def versionMinor = 0
-def versionPatch = 2
-def versionBuild = 102
+def versionPatch = 3
+def versionBuild = 7
 
 android {
     compileSdkVersion 30
@@ -17,14 +17,23 @@ android {
         applicationId "com.example.searchviewbottomnav"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.1"
+        versionCode versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
     }
+
+    lintOptions {
+        disable "StaticFieldLeak",
+                "UseCompoundDrawables",
+                "Autofill",
+                "UnusedResources"
+
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

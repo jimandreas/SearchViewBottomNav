@@ -12,7 +12,6 @@ import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -24,12 +23,6 @@ class UtilPrefsTest01 {
 
     private var appContext: Context? = null
     private var prefs: SharedPreferences? = null
-
-    val testList = listOf(
-        "apple",
-        "orange",
-        "banana"
-    )
 
     @Before
     fun before() {

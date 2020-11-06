@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.example.searchviewbottomnav.ui.search
 
 import androidx.lifecycle.LiveData

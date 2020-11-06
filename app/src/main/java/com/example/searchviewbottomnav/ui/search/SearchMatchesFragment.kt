@@ -10,7 +10,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -24,7 +23,7 @@ class SearchMatchesFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var searchResultsDisplay: FrameLayout
-    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var adapterInUse: SimpleStringRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -67,7 +66,7 @@ class SearchMatchesFragment : Fragment() {
         return searchResultsDisplay.visibility == VISIBLE
     }
 
-    fun startSearch(searchTerm: String, force: Boolean) {
+    fun startSearch(searchTerm: String) {
         val matches = Fruits.searchFruit(searchTerm)
         val matchNames = matches.map { it.name }
         adapterInUse.updateStringList(matchNames)
@@ -75,12 +74,12 @@ class SearchMatchesFragment : Fragment() {
     }
 
     class SimpleStringRecyclerViewAdapter(context: Context, private val valuesIn: List<String>)
-        : androidx.recyclerview.widget.RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder>() {
+        : RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder>() {
 
         private var stringListToDisplay = valuesIn
         private lateinit var searchViewModel: SearchViewModel
 
-        class ViewHolder(theView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(theView) {
+        class ViewHolder(theView: View) : RecyclerView.ViewHolder(theView) {
             lateinit var boundString: String
             val textView: TextView = theView.findViewById(R.id.fragment_search_text)
                     as TextView

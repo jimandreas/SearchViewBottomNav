@@ -7,7 +7,7 @@ import java.util.*
 object Fruits {
     data class FruitNameImage(val name: String, val imageurl: String)
 
-    val fruitList = listOf(
+    private val fruitList = listOf(
             FruitNameImage(name = "Apple", imageurl = "https://i.imgur.com/qAauMaa.jpg"),
             FruitNameImage(name = "Apricot", imageurl = "https://i.imgur.com/1X568rx.jpg"),
             FruitNameImage(name = "Banana", imageurl = "https://i.imgur.com/SBQGtgo.jpg"),
@@ -35,7 +35,7 @@ object Fruits {
      * iterate through the fruits and a list of entries
      * where the name contains the search string
      */
-    fun searchFruit(searchTerm: String): List<Fruits.FruitNameImage> {
+    fun searchFruit(searchTerm: String): List<FruitNameImage> {
         val s = searchTerm.toLowerCase(Locale.ROOT)
         val match = fruitList.filter { it.name.toLowerCase(Locale.ROOT).contains(s) }
         return match

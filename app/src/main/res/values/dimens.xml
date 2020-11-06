@@ -1,13 +1,8 @@
-<resources  xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-
-    <dimen name="toolbar_default_elevation">4dp</dimen>
-
-    <dimen name="bottom_nav_label_text_size">10sp</dimen>
-
     <dimen name="popup_menu_drop_down_horizontal_offset">8dp</dimen>
     <dimen name="popup_menu_drop_down_vertical_offset">-8dp</dimen>
 

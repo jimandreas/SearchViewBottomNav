@@ -22,7 +22,7 @@ import com.example.searchviewbottomnav.util.PrefsUtil
 import timber.log.Timber
 
 class MainApplication : Application() {
-    var context: Context = this
+    private var context: Context = this
 
     override fun onCreate() {
         super.onCreate()

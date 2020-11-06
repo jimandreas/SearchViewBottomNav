@@ -1,3 +1,5 @@
+@file:Suppress("RedundantSamConstructor", "UNUSED_ANONYMOUS_PARAMETER")
+
 package com.example.searchviewbottomnav.ui.search
 
 import android.os.Bundle
@@ -14,7 +16,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.searchviewbottomnav.R
-import com.example.searchviewbottomnav.ui.search.SearchFragment.Phase.INITIAL
 import com.example.searchviewbottomnav.util.Util.hideSoftKeyboard
 import timber.log.Timber
 
@@ -29,23 +30,12 @@ class SearchFragment :
     private lateinit var searchEditText: EditText
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
 
-
-    private lateinit var phase: Phase
-
-    enum class Phase(val current: Int) {
-        INITIAL(0),
-        SHOW_MATCHES(1),
-        SHOW_MATCHES_NO_KB(2),
-        DISPLAY_SELECTED_ITEM(3)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        phase = INITIAL
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         toolbar = root.findViewById(R.id.search_toolbar)
         searchEditText = root.findViewById(R.id.edittext_in_fragment_search)
@@ -73,7 +63,7 @@ class SearchFragment :
             //Timber.i("onTextChanged: $text, $start, $before, $count")
             if (text != null) {
                 val searchString = text.trim { it <= ' ' }
-                startSearch(searchString.toString(), false)
+                startSearch(searchString.toString())
             }
         }
 
@@ -111,7 +101,6 @@ class SearchFragment :
     override fun onStart() {
         super.onStart()
         showPanel(PANEL_RECENT_SEARCHES)
-        phase = INITIAL
     }
 
     override fun clearKeyboard() {
@@ -141,30 +130,15 @@ class SearchFragment :
         }
     }
 
-    /**
-     * Kick off a search, based on a given search term. Will automatically pass the search to
-     * Title search or Full search, based on which one is currently displayed.
-     * If the search term is empty, the "recent searches" view will be shown.
-     * @param term Phrase to search for.
-     * @param force Whether to "force" starting this search. If the search is not forced, the
-     * search may be delayed by a small time, so that network requests are not sent
-     * too often.  If the search is forced, the network request is sent immediately.
-     */
-    private fun startSearch(term: String, force: Boolean) {
-//        if (!isSearchActive) {
-//            openSearch()
-//        }
+    private fun startSearch(term: String) {
+
         if (TextUtils.isEmpty(term)) {
             showPanel(PANEL_RECENT_SEARCHES)
         } else if (getActivePanel() == PANEL_RECENT_SEARCHES) {
             showPanel(PANEL_SEARCH_RESULTS)
         }
-//        query = term
-//        if (isBlank(term) && !force) {
-//            return
-//        }
 
-        searchMatchesFragment.startSearch(term, force)
+        searchMatchesFragment.startSearch(term)
     }
 
 

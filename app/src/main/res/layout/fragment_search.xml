@@ -5,7 +5,6 @@
     android:id="@+id/search_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
     android:orientation="vertical"
     tools:visibility="visible">
 
@@ -47,7 +46,8 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/actionBarItemBackground"
                     android:padding="@dimen/list_item_horizontal_padding"
-                    app:srcCompat="@drawable/ic_clear_grey_24px" />
+                    app:srcCompat="@drawable/ic_clear_grey_24px"
+                    android:contentDescription="@string/button_clear_search_string"/>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
