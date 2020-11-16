@@ -1,14 +1,10 @@
 <resources>
-    <!--<string name="app_name">SearchViewBottomNav</string>-->
 
-    <!--prepend with 0 as the Pixel does not allow sorting apps by date-->
-    <string name="app_name">0SearchView</string>
+    <string name="app_name">Search View</string>
     <string name="app_title">Search View with Bottom Navigation</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_settings">Settings</string>
-
-
 
     <string name="search_recent_header">Recent searches:</string>
     <string name="search_hint">Search Fruits</string>
@@ -18,5 +14,33 @@
     <string name="menu_clear_all_history">Clear history</string>
     <string name="button_clear_search_string">Click here to clear the search string</string>
 
+    <string name="prefs_theme">Theme</string>
+    <string name="prefs_theme_key">theme_key</string>
+
+    <string name="prefs_theme_default_value">SOME DEFAULT VALUE</string>
+    <string name="prefs_theme_dialog_title">Choose theme</string>
+    <string name="prefs_theme_summary">CURRENT SETTING GOES HERE</string>
+    <string name="prefs_theme_title">Choose theme</string>
+
+
+    <array name="theme_array_battery_saver">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>Set by Battery Saver</item>
+    </array>
+
+    <array name="theme_array_system_default">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>System Default</item>
+    </array>
+
+
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+    </string-array>
 
 </resources>
