@@ -1,48 +1,63 @@
-@file:Suppress("RedundantSamConstructor")
+@file:Suppress("RedundantSamConstructor", "MoveVariableDeclarationIntoWhen", "UNUSED_VARIABLE")
 
 package com.example.searchviewbottomnav.ui.settings
 
 import android.content.SharedPreferences
-import android.os.Build
+import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.example.searchviewbottomnav.BuildConfig
 import com.example.searchviewbottomnav.R
+import com.example.searchviewbottomnav.util.Defs.TEN_Q_GOOD_BUDDY
 import timber.log.Timber
 
 class SettingsFragment : PreferenceFragmentCompat(),
-    SharedPreferences.OnSharedPreferenceChangeListener {
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     private var themePreference: ListPreference? = null
+    private var savedResources: Resources? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        savedResources = resources
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
         val context = preferenceScreen.context
 
         themePreferenceHandler()
 
-//        val versionPreference = findPreference("app_version")
-//        val currentVersionString = BuildConfig.VERSION_NAME
-//        versionPreference.summary = currentVersionString
+        val versionPreference: Preference? = findPreference("app_version")
+        val currentVersionString = BuildConfig.VERSION_NAME
+        versionPreference!!.summary = currentVersionString
     }
 
+    /**
+     * Adjust the Theme list preference
+     * With TenQAPI29 and above the Android platform has a system Dark Mode setting.
+     * Earlier it was something like a strange Battery Saver.
+     * This function hacks the pref list appropriately.
+     */
     private fun themePreferenceHandler() {
-        themePreference = findPreference(getString(R.string.prefs_theme_key))
-        if (Build.VERSION.SDK_INT >= 29) {
-            themePreference?.entryValues = resources.getStringArray(R.array.theme_array_system_default)
-            themePreference?.entries = resources.getStringArray(R.array.theme_array_system_default)
-        } else {
-            themePreference?.entries = resources.getStringArray(R.array.theme_array_battery_saver)
-            themePreference?.entryValues= resources.getStringArray(R.array.theme_array_battery_saver)
-        }
-        /*themePreference?.summaryProvider =
-            Preference.SummaryProvider<ListPreference> { preference ->
-                "asdf asdf"
 
-        }*/
+        try {
+            val entries = resources.getStringArray(R.array.theme_array_entries).toMutableList()
+            val entryValues = resources.getStringArray(R.array.theme_array_entry_values).toMutableList()
+
+            themePreference = findPreference(resources.getString(R.string.prefs_theme_key))
+            if (TEN_Q_GOOD_BUDDY) {
+                entries.remove(entries[2])
+                entryValues.remove(entryValues[2])
+            } else {
+                entries.remove(entries[3])
+                entryValues.remove(entryValues[3])
+            }
+            themePreference?.entries = entries.toTypedArray()
+            themePreference?.entryValues = entryValues.toTypedArray()
+        } catch (e: Exception) {
+            Timber.e(e, "Something bad happened in themePreferenceHandler")
+        }
     }
 
     override fun onResume() {
@@ -55,42 +70,40 @@ class SettingsFragment : PreferenceFragmentCompat(),
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+    override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
 
-        if (key == themePreference?.key) {
-            var themeArray: Array<String> = resources.getStringArray(R.array.theme_array_battery_saver)
-            if (Build.VERSION.SDK_INT >= 29) {
-                themeArray = resources.getStringArray(R.array.theme_array_system_default)
-            }
-            val theme = sharedPreferences?.getString(key, "ASDF ASDF")
-
-            when (theme) {
-                themeArray[0] -> Timber.e("Array 0")
-                themeArray[1] -> Timber.e("Array 1")
-                themeArray[2] -> Timber.e("Array 2")
-            }
-            //Timber.e("changed!! key $key at index $index")
+        val themeKey = savedResources!!.getString(R.string.prefs_theme_key)
+        if (key == themeKey) {
+            bashTheTheme(sp, savedResources)
         }
-
     }
 
-    /*
-    *
-    * fun getThemeAndDayNightModeNoActionBar(): Pair<Int, Int> {
-        val appThemesValues = context.resources.getStringArray(R.array.app_themes_values)
-
-        when (getDefaultSharedPreferences().getString(Constants.PREFERENCE_APP_THEME, appThemesValues[0])) {
-            appThemesValues[0] ->
-                return Pair(R.style.AppTheme_NoActionBar, AppCompatDelegate.MODE_NIGHT_NO)
-
-            appThemesValues[1] ->
-                return Pair(R.style.AppTheme_NoActionBar, AppCompatDelegate.MODE_NIGHT_YES)
-
-            appThemesValues[2] ->
-                return Pair(R.style.AppTheme_Black_NoActionBar, AppCompatDelegate.MODE_NIGHT_YES)
+    companion object {
+        /**
+         * Pull the string associated with the theme key and then
+         * set up the appropriate theme.   This is done vie the MainActivity
+         * and also in response to theme preference changes.
+         */
+        fun bashTheTheme(sp: SharedPreferences?, r: Resources?) {
+            try {
+                val themeKey = r!!.getString(R.string.prefs_theme_key)
+                val entryValues = r.getStringArray(R.array.theme_array_entry_values)
+                val setTo = sp!!.getString(themeKey, /* DEF value */ entryValues[0])
+                when (setTo) {
+                    entryValues[0] -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    entryValues[1] -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    else -> {
+                        if (TEN_Q_GOOD_BUDDY) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Something bad happened in bashTheTheme")
+            }
         }
-
-        return Pair(-1, -1)
     }
-    * */
 }
+
