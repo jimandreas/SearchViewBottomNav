@@ -13,10 +13,9 @@
 
 @file:Suppress("RedundantSamConstructor", "UnnecessaryVariable")
 
-package com.example.searchviewbottomnav.ui.home
+package com.example.searchviewbottomnav.ui.fastscroll
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.util.TypedValue
@@ -29,15 +28,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.searchviewbottomnav.R
 import com.example.searchviewbottomnav.util.generateMonthList
 import com.example.searchviewbottomnav.util.monthStringByKey
-import timber.log.Timber
 
-class HomeFragment : Fragment() {
+class FastscrollFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var fastscrollViewModel: FastscrollViewModel
     private lateinit var recyclerView : RecyclerView
 
     override fun onCreateView(
@@ -45,8 +42,8 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+        fastscrollViewModel =
+                ViewModelProvider(this).get(FastscrollViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 //        val textView: TextView = root.findViewById(R.id.text_home)
 //        homeViewModel.text.observe(viewLifecycleOwner, Observer {
@@ -61,6 +58,9 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
 
         //fast_scroll_recyclerview
+
+        val foo = FastscrollBubble(recyclerView)
+        foo.setup()
         return root
     }
 
