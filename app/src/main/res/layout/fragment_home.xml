@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright 2020 James Andreas
   ~  Licensed under the Apache License, Version 2.0 (the "License");
   ~  you may not use this file except in compliance with the License.
@@ -19,23 +18,50 @@
     android:layout_height="match_parent"
     tools:context=".ui.fastscroll.FastscrollFragment">
 
-<!--    <TextView-->
-<!--        android:id="@+id/text_home"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textSize="20sp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fast_scroll_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/very_big_padding"
-        android:scrollbars="vertical" />
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+ />
+
+    <!--Fast Scroll Handle-->
+    <ImageView
+        android:id="@+id/thumbFastscrollerImageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_fastscroll_slider_lightmode"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/fast_scroll_recyclerview"
+        app:layout_constraintStart_toEndOf="@+id/fast_scroll_recyclerview"
+        app:layout_constraintTop_toTopOf="@+id/fast_scroll_recyclerview"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
+
+    <!--Time Markers-->
+    <TextView
+        android:id="@+id/t2015"
+        android:clickable="false"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/nine_patch_decent_blue"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="4dp"
+        android:text="2015"
+        android:textColor="@android:color/black"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText"
+        tools:visibility="visible" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
