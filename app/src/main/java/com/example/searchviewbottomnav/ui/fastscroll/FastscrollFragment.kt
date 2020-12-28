@@ -15,8 +15,6 @@
 
 package com.example.searchviewbottomnav.ui.fastscroll
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
 import android.text.Html
@@ -24,7 +22,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -61,10 +58,6 @@ class FastscrollFragment : Fragment() {
             generateMonthList()
         )
         recyclerView.adapter = adapter
-
-
-
-
         rootView = root
         return root
     }
@@ -72,12 +65,9 @@ class FastscrollFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val foo = FastscrollBubble(rootView, recyclerView, viewLifecycleOwner)
-        foo.setup()
-
+        val fsb = FastscrollBubble(rootView, recyclerView, viewLifecycleOwner)
+        fsb.setup()
     }
-
-
 
     class SimpleStringRecyclerViewAdapter(context: Context, private val monthList: Array<String>)
         : RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder>() {
@@ -85,13 +75,12 @@ class FastscrollFragment : Fragment() {
         private val typedValue = TypedValue()
         private val background: Int
 
-        class ViewHolder(val v: View, viewType: Int) : RecyclerView.ViewHolder(v) {
+        inner class ViewHolder(val v: View, viewType: Int) : RecyclerView.ViewHolder(v) {
             var boundString: String? = null
             lateinit var imageView: ImageView
             lateinit var textView: TextView
             lateinit var textView2: TextView
             lateinit var textViewHeader: TextView
-
 
             init {
                 when (viewType) {
@@ -111,16 +100,10 @@ class FastscrollFragment : Fragment() {
 
         // Add a header for position 0
         override fun getItemViewType(position: Int): Int {
-            val entry = monthList[position]
-
             return if (position == 0)
                 VIEW_TYPE_HEADER
             else
                 VIEW_TYPE_MOTM
-        }
-
-        fun getValueAt(position: Int): String {
-            return monthList[position]
         }
 
         init {
@@ -141,7 +124,7 @@ class FastscrollFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.boundString = monthStringByKey(position)
+            holder.boundString = monthList[position]
 
             if (position == 0) {
                 val spannedString = Html.fromHtml(

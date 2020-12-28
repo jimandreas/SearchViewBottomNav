@@ -16,14 +16,15 @@ package com.example.searchviewbottomnav.ui.fastscroll
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.graphics.drawable.Drawable
+import android.annotation.SuppressLint
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.ImageView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -35,7 +36,7 @@ class FastscrollBubble(
         private val constraintLayout: View,
         private val recyclerView: RecyclerView,
         private val viewLifecycleOwner: LifecycleOwner)
-    : LifecycleEventObserver, OneShotTimer.Callback {
+    : LifecycleEventObserver, OneShotTimer.Callback, View.OnTouchListener {
 
     private lateinit var thumbImageView: ImageView
     private lateinit var t2015: View
@@ -45,11 +46,13 @@ class FastscrollBubble(
 
     private lateinit var animatorSet: AnimatorSet
 
-    private val timer = OneShotTimer(recyclerView.context)
+    private val thumbTimer = OneShotTimer(recyclerView.context)
+    private val dateLineTimer = OneShotTimer(recyclerView.context)
 
     private val containerWidth = (recyclerView as ViewGroup).width
 
 
+    @SuppressLint("ClickableViewAccessibility")
     fun setup() {
         val l = Listener()
         recyclerView.addOnScrollListener(l)
@@ -58,8 +61,32 @@ class FastscrollBubble(
         thumbImageView = constraintLayout.findViewById(R.id.thumbFastscrollerImageview)
         t2015 = constraintLayout.findViewById(R.id.t2015)
 
-        timer.setCallback(this)
+        thumbTimer.setCallback(this)
 
+        /*
+        playBtn.setOnTouchListener { _, event ->
+            playSound(event)
+            true
+        }
+         */
+        thumbImageView.setOnTouchListener(this)
+
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        Timber.e("CLICKYYYY")
+        thumbTimer.setTimerValue(3000)
+        showDateLine()
+        return true
+    }
+
+    private fun showDateLine() {
+        t2015.visibility = VISIBLE
+
+    }
+
+    private fun hideDateLine() {
+        t2015.visibility = INVISIBLE
     }
 
     private fun slideInAnmationThumb() {
@@ -168,10 +195,10 @@ class FastscrollBubble(
                 RecyclerView.SCROLL_STATE_DRAGGING -> {
                     slideInAnmationThumb()
                     //Timber.v("Dragging")
-                    if (!timer.isRunning) {
-                        timer.startTimer(3000)
+                    if (!thumbTimer.isRunning) {
+                        thumbTimer.startTimer(3000)
                     } else {
-                        timer.setTimerValue(3000)
+                        thumbTimer.setTimerValue(3000)
                     }
                 }
 //                RecyclerView.SCROLL_STATE_IDLE -> Timber.v("Idle")
@@ -182,7 +209,9 @@ class FastscrollBubble(
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
-            timer.setTimerValue(3000)
+            thumbTimer.setTimerValue(3000)
         }
     }
+
+
 }
