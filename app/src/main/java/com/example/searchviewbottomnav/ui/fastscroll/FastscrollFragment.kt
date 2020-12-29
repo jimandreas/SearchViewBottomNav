@@ -30,7 +30,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.searchviewbottomnav.R
 import com.example.searchviewbottomnav.util.generateMonthList
-import com.example.searchviewbottomnav.util.monthStringByKey
 
 class FastscrollFragment : Fragment() {
 
@@ -46,7 +45,7 @@ class FastscrollFragment : Fragment() {
     ): View? {
         fastscrollViewModel =
                 ViewModelProvider(this).get(FastscrollViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val root = inflater.inflate(R.layout.fragment_fastscroll, container, false)
 //        val textView: TextView = root.findViewById(R.id.text_home)
 //        homeViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
