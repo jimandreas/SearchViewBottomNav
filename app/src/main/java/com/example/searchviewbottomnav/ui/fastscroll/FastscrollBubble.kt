@@ -18,12 +18,15 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.view.MotionEvent
+import android.view.MotionEvent.ACTION_MOVE
+import android.view.MotionEvent.ACTION_POINTER_DOWN
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -40,9 +43,12 @@ class FastscrollBubble(
 
     private lateinit var thumbImageView: ImageView
     private lateinit var t2015: View
+    private lateinit var t2010: View
+    private lateinit var t2005: View
     private var thumbImageViewX = 0
     private var t2015X = 0
 
+    private lateinit var debugTextView: TextView
 
     private lateinit var animatorSet: AnimatorSet
 
@@ -60,6 +66,9 @@ class FastscrollBubble(
 
         thumbImageView = constraintLayout.findViewById(R.id.thumbFastscrollerImageview)
         t2015 = constraintLayout.findViewById(R.id.t2015)
+        t2010 = constraintLayout.findViewById(R.id.t2010)
+        t2005 = constraintLayout.findViewById(R.id.t2005)
+        debugTextView = constraintLayout.findViewById(R.id.debugTextView)
 
         thumbTimer.setCallback(this)
 
@@ -73,15 +82,12 @@ class FastscrollBubble(
 
     }
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        Timber.e("CLICKYYYY")
-        thumbTimer.setTimerValue(3000)
-        showDateLine()
-        return true
-    }
+
 
     private fun showDateLine() {
         t2015.visibility = VISIBLE
+        t2010.visibility = VISIBLE
+        t2005.visibility = VISIBLE
 
     }
 
@@ -211,6 +217,52 @@ class FastscrollBubble(
             super.onScrolled(recyclerView, dx, dy)
             thumbTimer.setTimerValue(3000)
         }
+    }
+
+    override fun onTouch(v: View?, m: MotionEvent?): Boolean {
+
+
+        val rHeight = recyclerView.height
+
+        if (m == null) return true
+        val action = m.actionMasked
+        when (action) {
+            ACTION_POINTER_DOWN -> {
+                thumbTimer.setTimerValue(3000)
+                showDateLine()
+                //previousX = m.x
+                previousY = m.y
+            }
+            ACTION_MOVE -> {
+                //thumbImageView.x = m.x
+                thumbTimer.setTimerValue(3000)
+
+                thumbImageView.y = m.rawY - 2*thumbImageView.height
+                clipY()
+
+                val pos = 252f * (m.rawY-thumbImageView.height) / (rHeight.toFloat()-thumbImageView.height)
+                debugTextView.text = pos.toString()
+
+               // recyclerView.smoothScrollToPosition(pos.toInt())
+                recyclerView.scrollToPosition(pos.toInt())
+                Timber.v("${m.rawY} ${m.y}  pos = $pos $rHeight")
+            }
+        }
+        return false
+    }
+
+    fun clipY() {
+        if (thumbImageView.y < 0) {
+            thumbImageView.y = 0f
+        }
+        if (thumbImageView.y > recyclerView.height - 2*thumbImageView.height) {
+            thumbImageView.y = recyclerView.height - 2*thumbImageView.height.toFloat()
+        }
+    }
+
+    companion object {
+        private var previousX  = 0f
+        private var previousY = 0f
     }
 
 
