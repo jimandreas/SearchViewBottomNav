@@ -51,7 +51,7 @@ class OneShotTimer(context: Context) {
                 delay(500L)
                 mutex.withLock {
                     countDownTime -= 500
-                    Timber.v("TIME IS $countDownTime")
+                    //Timber.v("TIME IS $countDownTime")
                 }
             }
 

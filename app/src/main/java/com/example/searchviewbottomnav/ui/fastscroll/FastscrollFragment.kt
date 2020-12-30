@@ -36,6 +36,7 @@ class FastscrollFragment : Fragment() {
     private lateinit var fastscrollViewModel: FastscrollViewModel
     private lateinit var recyclerView : RecyclerView
     private lateinit var rootView : View
+    private var monthList : Array<String>? = null
 
 
     override fun onCreateView(
@@ -51,10 +52,11 @@ class FastscrollFragment : Fragment() {
 //            textView.text = it
 //        })
 
+        monthList = generateMonthList()
         recyclerView = root.findViewById(R.id.fast_scroll_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
         val adapter = SimpleStringRecyclerViewAdapter(recyclerView.context,
-            generateMonthList()
+            monthList!!
         )
         recyclerView.adapter = adapter
         rootView = root
@@ -64,7 +66,7 @@ class FastscrollFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fsb = FastscrollBubble(rootView, recyclerView, viewLifecycleOwner)
+        val fsb = FastscrollBubble(rootView, recyclerView, viewLifecycleOwner, monthList!!)
         fsb.setup()
     }
 
