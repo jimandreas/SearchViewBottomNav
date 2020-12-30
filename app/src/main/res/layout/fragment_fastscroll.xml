@@ -25,7 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
-        android:paddingBottom="@dimen/very_big_padding"
         android:scrollbarAlwaysDrawVerticalTrack="false"
         android:scrollbars="none"
         tools:layout_editor_absoluteX="0dp"
