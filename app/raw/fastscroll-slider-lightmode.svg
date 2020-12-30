@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <g class="layer">
+  <title>Layer 1</title>
+  <path d="m55.72818,98.899994c0,-49.873934 40.397886,-90.27182 90.27182,-90.27182c49.873934,0 90.27182,40.397886 90.27182,90.27182c0,49.873934 -40.397886,90.27182 -90.27182,90.27182c-49.873934,0 -90.27182,-40.397886 -90.27182,-90.27182z" fill="#eee" id="svg_3" stroke="#eee" stroke-width="5"/>
+  <line fill="none" id="svg_5" stroke="#eee" stroke-width="5" x1="197" x2="197" y1="26.899994" y2="172.899986"/>
+  <g id="svg_14" transform="rotate(-2, 143.078, 66.2)">
+   <line fill="none" id="svg_8" stroke="#333" stroke-width="5" x1="147" x2="118" y1="47.899994" y2="83.899994"/>
+   <line fill="none" id="svg_13" stroke="#333" stroke-width="5" transform="rotate(-70, 156.2, 66.2)" x1="170.700012" x2="141.700012" y1="48.199997" y2="84.199997"/>
+  </g>
+  <g id="svg_16" transform="rotate(-180, 145, 122.9)">
+   <line fill="none" id="svg_17" stroke="#333" stroke-width="5" x1="148.922394" x2="119.922394" y1="104.600012" y2="140.600012"/>
+   <line fill="none" id="svg_18" stroke="#333" stroke-width="5" transform="rotate(-70, 158.122, 122.9)" x1="172.622406" x2="143.622406" y1="104.900015" y2="140.900015"/>
+  </g>
+ </g>
+</svg>
