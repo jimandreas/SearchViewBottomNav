@@ -28,7 +28,6 @@ private val monthNamesShort = arrayOf(
         "Oct",
         "Nov",
         "Dec"
-
 )
 
 
@@ -47,8 +46,10 @@ fun generateMonthList(): Array<String> {
     val initList = mutableListOf<String>()
 
     var j = 0
-    for (i in 252 downTo 1) {
+    for (i in numMonths downTo 1) {
         initList.add(monthStringByKey(i))
     }
     return initList.toTypedArray()
 }
+
+const val numMonths = 253

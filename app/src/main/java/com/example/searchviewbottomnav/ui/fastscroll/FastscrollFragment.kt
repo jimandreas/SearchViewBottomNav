@@ -1,5 +1,5 @@
 /*
- *  Copyright 2020 James Andreas
+ *  Copyright 2021 James Andreas
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -77,7 +77,6 @@ class FastscrollFragment : Fragment() {
         private val background: Int
 
         inner class ViewHolder(val v: View, viewType: Int) : RecyclerView.ViewHolder(v) {
-            var boundString: String? = null
             lateinit var imageView: ImageView
             lateinit var textView: TextView
             lateinit var textView2: TextView
@@ -114,9 +113,9 @@ class FastscrollFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-            var layoutId = R.layout.list_item_motm
+            var layoutId = R.layout.fastscroll_list_item_motm
             if (viewType == VIEW_TYPE_HEADER) {
-                layoutId = R.layout.list_item_header
+                layoutId = R.layout.fastscroll_list_item_header
             }
 
             val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
@@ -125,7 +124,6 @@ class FastscrollFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.boundString = monthList[position]
 
             if (position == 0) {
                 val spannedString = Html.fromHtml(
@@ -136,13 +134,13 @@ class FastscrollFragment : Fragment() {
 
                 holder.textViewHeader.text = spannedString
             } else {
-                holder.textView.text = holder.boundString!!
+                holder.textView.text = monthList[position-1]
             }
 
         }
 
         override fun getItemCount(): Int {
-            return monthList.size
+            return monthList.size+1  // add one for the header of the list
         }
     }
     companion object {

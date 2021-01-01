@@ -1,5 +1,5 @@
 /*
- *  Copyright 2020 James Andreas
+ *  Copyright 2021 James Andreas
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -28,7 +28,7 @@ internal class MonthsKtTest {
 
         assertFalse(testresult.isEmpty())
 
-        assertEquals(252, testresult.size)
+        assertEquals(numMonths, testresult.size)
         assert(testresult[0].contains("December"))
         assert(testresult[0].contains("2020"))
         assert(testresult[251].contains("January"))

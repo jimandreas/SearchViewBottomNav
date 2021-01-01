@@ -62,7 +62,7 @@
         app:layout_constraintBottom_toTopOf="@+id/t2005"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintVertical_bias="0.35"
         app:layout_constraintVertical_chainStyle="spread"
         tools:ignore="HardcodedText"
         tools:visibility="visible" />
@@ -133,13 +133,16 @@
         tools:text="Jan 2000"
         tools:visibility="visible" />
 
+    <!--Make this visible for position debugging-->
     <TextView
         android:id="@+id/debugTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Debug Position"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
