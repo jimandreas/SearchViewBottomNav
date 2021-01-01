@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~  Copyright 2020 James Andreas
+  ~  Copyright 2021 James Andreas
   ~  Licensed under the Apache License, Version 2.0 (the "License");
   ~  you may not use this file except in compliance with the License.
   ~  You may obtain a copy of the License at
@@ -27,6 +27,9 @@
         android:id="@+id/monthtext"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        android:textSize="30sp"
 
 
         app:layout_constraintEnd_toEndOf="parent"

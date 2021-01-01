@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~  Copyright 2020 James Andreas
+  ~  Copyright 2021 James Andreas
   ~  Licensed under the Apache License, Version 2.0 (the "License");
   ~  you may not use this file except in compliance with the License.
   ~  You may obtain a copy of the License at
@@ -62,8 +62,8 @@
         app:layout_constraintBottom_toTopOf="@+id/t2005"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35"
         app:layout_constraintVertical_chainStyle="spread"
-        app:layout_constraintVertical_bias="0.25"
         tools:ignore="HardcodedText"
         tools:visibility="visible" />
 
@@ -84,8 +84,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintVertical_chainStyle="spread"
         tools:ignore="HardcodedText"
         tools:visibility="visible" />
 
@@ -103,18 +103,18 @@
         android:text="2005"
         android:textColor="@android:color/black"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintVertical_bias="0.75"
+        app:layout_constraintVertical_chainStyle="spread"
         tools:ignore="HardcodedText"
         tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tcurrent"
-        android:layout_width="170dp"
-        android:layout_height="30dp"
+        android:layout_width="100sp"
+        android:layout_height="40sp"
         android:layout_marginEnd="100dp"
         android:background="@drawable/nine_patch_decent_blue"
         android:clickable="false"
@@ -122,23 +122,27 @@
         android:paddingTop="4dp"
         android:paddingEnd="4dp"
         android:paddingBottom="4dp"
-        android:text="current"
-        android:textAlignment="textEnd"
         android:textColor="@android:color/black"
+
+        android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText"
+        tools:text="Jan 2000"
         tools:visibility="visible" />
 
+    <!--Make this visible for position debugging-->
     <TextView
         android:id="@+id/debugTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Debug Position"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
