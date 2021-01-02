@@ -11,7 +11,7 @@
  *  limitations under the License
  */
 
-@file:Suppress("RedundantSamConstructor", "UnnecessaryVariable")
+@file:Suppress("RedundantSamConstructor", "UnnecessaryVariable", "CanBeParameter", "DEPRECATION")
 
 package com.example.searchviewbottomnav.ui.fastscroll
 
@@ -22,7 +22,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -76,10 +75,8 @@ class FastscrollFragment : Fragment() {
         private val typedValue = TypedValue()
         private val background: Int
 
-        inner class ViewHolder(val v: View, viewType: Int) : RecyclerView.ViewHolder(v) {
-            lateinit var imageView: ImageView
+        inner class ViewHolder(v: View, viewType: Int) : RecyclerView.ViewHolder(v) {
             lateinit var textView: TextView
-            lateinit var textView2: TextView
             lateinit var textViewHeader: TextView
 
             init {

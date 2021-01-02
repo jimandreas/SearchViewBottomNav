@@ -18,9 +18,9 @@ package com.example.searchviewbottomnav.ui.fastscroll
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.view.MotionEvent
-import android.view.MotionEvent.*
+import android.view.MotionEvent.ACTION_DOWN
+import android.view.MotionEvent.ACTION_MOVE
 import android.view.View
-import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
@@ -30,9 +30,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.searchviewbottomnav.R
-import com.example.searchviewbottomnav.ui.fastscroll.FastscrollBubble.Companion.BOTTOM_STATE.*
+import com.example.searchviewbottomnav.ui.fastscroll.FastscrollBubble.Companion.BOTTOMSTATE.*
 import com.example.searchviewbottomnav.util.OneShotTimer
-import com.example.searchviewbottomnav.util.Util.getNavigationBarSize
 import com.example.searchviewbottomnav.util.numMonths
 import timber.log.Timber
 
@@ -40,7 +39,7 @@ class FastscrollBubble(
         private val constraintLayout: View,
         private val recyclerView: RecyclerView,
         private val viewLifecycleOwner: LifecycleOwner,
-        private val monthList : Array<String>)
+        private val monthList: Array<String>)
     : LifecycleEventObserver, OneShotTimer.Callback, View.OnTouchListener {
 
     private lateinit var thumbImageView: ImageView
@@ -50,12 +49,9 @@ class FastscrollBubble(
     private lateinit var tcurrent: TextView
 
 
-    private lateinit var debugTextView: TextView
+    private lateinit var debugTextView: TextView  // set to VISIBLE for debugging
 
     private val thumbTimer = OneShotTimer(recyclerView.context)
-
-    private var adjRheight = 0
-
 
     @SuppressLint("ClickableViewAccessibility")
     fun setup() {
@@ -71,27 +67,11 @@ class FastscrollBubble(
         debugTextView = constraintLayout.findViewById(R.id.debugTextView)
 
         thumbTimer.setCallback(this)
-
-        /*
-        playBtn.setOnTouchListener { _, event ->
-            playSound(event)
-            true
-        }
-         */
         thumbImageView.setOnTouchListener(this)
 
-        val p = getNavigationBarSize(constraintLayout.context)
-        //Timber.e("NAV HEIGHT = $p")
-        adjRheight = recyclerView.height - p
     }
 
-
-
     private fun showDateLine() {
-//        t2015.visibility = VISIBLE
-//        t2010.visibility = VISIBLE
-//        t2005.visibility = VISIBLE
-
         t2015.show()
         t2010.show()
         t2005.show()
@@ -126,31 +106,20 @@ class FastscrollBubble(
         }
     }
 
-    private fun hideDateLine() {
-        t2015.visibility = INVISIBLE
-    }
-
     private fun slideInAnmationThumb() {
-
-        // Timber.v("slideInAnimationThumb")
-
         with(thumbImageView) {
-            //if (visibility == View.GONE) {
-                animate().cancel()
-                //translationX = containerWidth.toFloat()+width
-                visibility = VISIBLE
-                animate().apply {
-                    duration = 200
-                    setListener(null)
-                    translationX(-width.toFloat())
-                }.start()
-            //}
+            animate().cancel()
+            //translationX = containerWidth.toFloat()+width
+            visibility = VISIBLE
+            animate().apply {
+                duration = 200
+                setListener(null)
+                translationX(-width.toFloat())
+            }.start()
         }
     }
 
     private fun slideOutAnimationThumb() {
-
-        // Timber.v("slideOUTAnimationThumb")
         val l = ThumbListener()
         with(thumbImageView) {
             animate().apply {
@@ -161,7 +130,6 @@ class FastscrollBubble(
             }
         }
     }
-    
 
     override fun timerFinished() {
         slideOutAnimationThumb()
@@ -196,17 +164,13 @@ class FastscrollBubble(
         }
 
         override fun onAnimationStart(animation: Animator?) {
-
         }
 
         override fun onAnimationCancel(animation: Animator?) {
-
         }
 
         override fun onAnimationRepeat(animation: Animator?) {
-
         }
-
     }
 
     inner class ScrollListener : RecyclerView.OnScrollListener() {
@@ -241,12 +205,12 @@ class FastscrollBubble(
                 Timber.e("ave is $ave, first $first last $last")
             }
             if (ave >= monthList.size) {
-                ave = (monthList.size-1).toFloat()
+                ave = (monthList.size - 1).toFloat()
             }
 
             thumbTimer.setTimerValue(3000)
 
-            val curPos = ave * (recyclerView.height.toFloat()-thumbImageView.height) / numMonths.toFloat()
+            val curPos = ave * (recyclerView.height.toFloat() - thumbImageView.height) / numMonths.toFloat()
 
 
             val bottomDelta: Int = recyclerView.height - curPos.toInt()
@@ -283,20 +247,21 @@ class FastscrollBubble(
                 }
                 POSITION_IS_AT_BOTTOM -> {
                     bottomAddedScrollValue += 1
-                    if (ave.toInt() + bottomAddedScrollValue < last-1) {
+                    if (ave.toInt() + bottomAddedScrollValue < last - 1) {
                         str = monthList[ave.toInt() + bottomAddedScrollValue]
                     } else {
-                        str = monthList[last-1]
+                        str = monthList[last - 1]
                     }
                 }
-                else -> {}
+                else -> {
+                }
             }
 
             /*
              *  Top region handling- the thumb must stop at the boundary
              *  of the recyclerView but the scrolling should continue to the last value
              */
-            if (unclippedPos <  thumbImageView.height.toFloat()) {
+            if (unclippedPos < thumbImageView.height.toFloat()) {
                 if (currentState == POSITION_IS_IN_MIDDLE_SECTION) {
                     currentState = POSITION_IS_AT_TOP // entering the bottom region
                     topAddedScrollValue = 0
@@ -317,7 +282,8 @@ class FastscrollBubble(
                         str = monthList[0]
                     }
                 }
-                else -> {}
+                else -> {
+                }
             }
 
             tcurrent.text = str
@@ -327,57 +293,47 @@ class FastscrollBubble(
     override fun onTouch(v: View?, m: MotionEvent?): Boolean {
         v?.performClick()  // this does nothing but lint likes it
 
-        val rHeight = recyclerView.height
+        val rHeight = recyclerView.height.toFloat()
+        val tHeight = thumbImageView.height.toFloat()
 
         if (m == null) return true
         val action = m.actionMasked
         when (action) {
             ACTION_DOWN -> {
-
-
-                val pos = recyclerView.scrollY
-                // Timber.e("pos is $pos")
                 showDateLine()
-                //previousX = m.x
                 previousY = m.y
                 thumbTimer.setTimerValue(3000)
             }
             ACTION_MOVE -> {
-                //thumbImageView.x = m.x
                 thumbTimer.setTimerValue(3000)
-
-//                thumbImageView.y = m.rawY - 2*thumbImageView.height
-//                clipY()
-
-                val pos = numMonths.toFloat() * (m.rawY-thumbImageView.height) / (rHeight.toFloat()-thumbImageView.height)
+                // this is tuned - still has mild hysteresis problems.
+                val pos = (m.rawY - tHeight * 1.8f) * numMonths.toFloat() / rHeight
                 debugTextView.text = pos.toString()
-
-               // recyclerView.smoothScrollToPosition(pos.toInt()) // this doesn't work
+                // recyclerView.smoothScrollToPosition(pos.toInt()) // this doesn't work
                 recyclerView.scrollToPosition(pos.toInt())
-                // Timber.v("${m.rawY} ${m.y}  pos = $pos $rHeight")
+                //Timber.v("${m.rawY} ${m.y}  pos $pos recyclerView Y ${recyclerView.y} Y+H ${recyclerView.y + recyclerView.height}")
             }
         }
         return false
     }
 
-    private fun clipY() {
+/*    private fun clipY() {
         if (thumbImageView.y < 0) {
             thumbImageView.y = 0f
         }
         if (thumbImageView.y > recyclerView.height - 2*thumbImageView.height) {
             thumbImageView.y = recyclerView.height - 2*thumbImageView.height.toFloat()
         }
-    }
+    }*/
 
     companion object {
-        private var previousX  = 0f
         private var previousY = 0f
 
         private var currentState = POSITION_IS_IN_MIDDLE_SECTION
         private var bottomAddedScrollValue = 0
         private var topAddedScrollValue = 0
 
-        enum class BOTTOM_STATE {
+        enum class BOTTOMSTATE {
             POSITION_IS_AT_TOP,
             POSITION_IS_IN_MIDDLE_SECTION,
             POSITION_IS_AT_BOTTOM

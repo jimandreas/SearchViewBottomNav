@@ -31,7 +31,8 @@
 
         app:layout_constraintBottom_toBottomOf="@+id/columnheader"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/columnheader"
