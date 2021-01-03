@@ -6,9 +6,9 @@ repo: https://github.com/jimandreas/SearchViewBottomNav
 
 Demonstrates what this app has implemented:
 
-<img src="docs/img/ScreenAnim.gif" width = 200>
-&nbsp;&nbsp;
-<img src="docs/img/FastScrollAnim.gif" width = 200>
+<img src="docs/img/ScreenAnim.gif" width = 200> Search function with Bottom Nav Bar
+
+<img src="docs/img/FastScrollAnim.gif" width = 200> Fast Scroll over 253 months of entries
 
 ## Implemented:
 
