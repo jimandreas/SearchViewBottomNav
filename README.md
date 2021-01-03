@@ -2,10 +2,28 @@
 
 repo: https://github.com/jimandreas/SearchViewBottomNav
 
-This repo was intended to develop a SearchView based search facility.
-**_BUT_** it has now pivoted to developing search functionality
-using an EditText widget.   The demonstration app is composed 
-using a [bottom navigation] bar as the User Interface (UI) framework. 
+## Screen Animation
+
+Demonstrates what this app has implemented:
+
+<img src="docs/img/ScreenAnim.gif" width = 200>
+&nbsp;&nbsp;
+<img src="docs/img/FastScrollAnim.gif" width = 200>
+
+## Implemented:
+
+* Search Fruits - remember search choices.  Show matches.
+
+* Fast scroll of 20 years of monthly selections.  Based on the Google Photos fast scroll UX.
+
+## UX credits
+
+* Google Photos fast scroll.   It is really a good example of a useful scroll feature.
+
+* Wikipedia search function.   It was the model to match for a search user experience.
+
+Note that both of these UX features were implemented here as concepts for inclusion in the
+Molecule Of The Month browser implementation.
 
 Code credits:
 
@@ -41,11 +59,6 @@ the **Reply** app.
 The fruit images are all sourced from [imgur].   See the [FRUITS.md] file 
 for the fruit images referenced and
 their URLs.
-
-## Screen Animation
-
-Demonstrates what this app has implemented:<br>
-<img src="docs/img/ScreenAnim.gif" width = 200>
 
 
 [wikipedia app in github]: https://github.com/wikimedia/apps-android-wikipedia
