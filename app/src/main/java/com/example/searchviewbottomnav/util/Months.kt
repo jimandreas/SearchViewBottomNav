@@ -45,7 +45,6 @@ fun monthStringByKey(key: Int): String {
 fun generateMonthList(): Array<String> {
     val initList = mutableListOf<String>()
 
-    var j = 0
     for (i in numMonths downTo 1) {
         initList.add(monthStringByKey(i))
     }
