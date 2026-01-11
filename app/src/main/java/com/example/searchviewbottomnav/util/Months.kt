@@ -15,6 +15,8 @@
 
 package com.example.searchviewbottomnav.util
 
+import java.util.Locale
+
 private val monthNamesShort = arrayOf(
         "Jan",
         "Feb",
@@ -36,7 +38,7 @@ fun monthStringByKey(key: Int): String {
     val month = (key - 1) % 12
     val year = (key - 1) / 12 + 2000
 
-    val retString = monthNamesShort[month] + " " + String.format("%4d", year)
+    val retString = monthNamesShort[month] + " " + String.format(Locale.ROOT, "%4d", year)
     // String.format("%6.2f", elapsed_time);
 
     return retString

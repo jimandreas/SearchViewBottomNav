@@ -17,6 +17,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.searchviewbottomnav.Fruits
@@ -31,6 +32,13 @@ class FruitActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fruit)
         title = "Your selection here"
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@FruitActivity, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
+        })
 
         val fruitName = intent.getStringExtra(EXTRA_NAME)
         if (fruitName != null) {
@@ -48,12 +56,6 @@ class FruitActivity : AppCompatActivity() {
             .centerCrop()
             .into(imageView)
 
-    }
-
-    override fun onBackPressed() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
     }
 
     companion object {
