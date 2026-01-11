@@ -104,7 +104,7 @@ class FastscrollFragment : Fragment() {
         }
 
         init {
-            context.theme.resolveAttribute(R.attr.selectableItemBackground, typedValue, true)
+            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)
             background = typedValue.resourceId
         }
 
