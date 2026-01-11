@@ -18,9 +18,9 @@ plugins {
 }
 
 val versionMajor = 1
-val versionMinor = 1
+val versionMinor = 3
 val versionPatch = 0
-val versionBuild = 12
+val versionBuild = 13
 
 android {
     namespace = "com.example.searchviewbottomnav"

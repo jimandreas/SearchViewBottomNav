@@ -16,6 +16,7 @@ package com.example.searchviewbottomnav.ui.fastscroll
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.view.MotionEvent
+import java.util.Locale
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import android.view.View
@@ -258,7 +259,7 @@ class FastscrollBubble(
                 val rHeight = recyclerView.height.toFloat()
                 val tHeight = thumbImageView.height.toFloat()
                 val pos = (m.rawY - tHeight * TOUCH_OFFSET_MULTIPLIER) * numMonths.toFloat() / rHeight
-                debugTextView.text = String.format("%.1f", pos)
+                debugTextView.text = String.format(Locale.ROOT, "%.1f", pos)
                 recyclerView.scrollToPosition(pos.toInt())
             }
         }
