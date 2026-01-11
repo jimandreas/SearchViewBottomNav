@@ -11,11 +11,9 @@
  *  limitations under the License
  */
 
-@file:Suppress("RedundantSamConstructor", "UnnecessaryVariable", "CanBeParameter", "DEPRECATION")
-
 package com.example.searchviewbottomnav.ui.fastscroll
 
-import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.TypedValue
@@ -24,124 +22,115 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.searchviewbottomnav.R
+import com.example.searchviewbottomnav.databinding.FragmentFastscrollBinding
 import com.example.searchviewbottomnav.util.generateMonthList
 
 class FastscrollFragment : Fragment() {
 
-    private lateinit var fastscrollViewModel: FastscrollViewModel
-    private lateinit var recyclerView : RecyclerView
-    private lateinit var rootView : View
-    private var monthList : Array<String>? = null
+    private var _binding: FragmentFastscrollBinding? = null
+    private val binding get() = _binding!!
 
+    private var monthList: Array<String>? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        fastscrollViewModel =
-                ViewModelProvider(this).get(FastscrollViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_fastscroll, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_home)
-//        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFastscrollBinding.inflate(inflater, container, false)
 
         monthList = generateMonthList()
-        recyclerView = root.findViewById(R.id.fast_scroll_recyclerview)
-        recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
-        val adapter = SimpleStringRecyclerViewAdapter(recyclerView.context,
-            monthList!!
-        )
-        recyclerView.adapter = adapter
-        rootView = root
-        return root
+        binding.fastScrollRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        binding.fastScrollRecyclerview.adapter = MonthListAdapter(monthList!!)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fsb = FastscrollBubble(rootView, recyclerView, viewLifecycleOwner, monthList!!)
+        val fsb = FastscrollBubble(binding.root, binding.fastScrollRecyclerview, viewLifecycleOwner, monthList!!)
         fsb.setup()
     }
 
-    class SimpleStringRecyclerViewAdapter(context: Context, private val monthList: Array<String>)
-        : RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder>() {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-        private val typedValue = TypedValue()
-        private val background: Int
+    private class MonthListAdapter(private val monthList: Array<String>) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        inner class ViewHolder(v: View, viewType: Int) : RecyclerView.ViewHolder(v) {
-            lateinit var textView: TextView
-            lateinit var textViewHeader: TextView
+        private var background: Int = 0
 
-            init {
-                when (viewType) {
-                    VIEW_TYPE_MOTM -> {
-                        textView = v.findViewById(R.id.monthtext)
-                    }
-                    VIEW_TYPE_HEADER -> {
-                        textViewHeader = v.findViewById(R.id.columnheader)
-                    }
-                }
-            }
-
-            override fun toString(): String {
-                return super.toString() + " '" + textView.text
-            }
-        }
-
-        // Add a header for position 0
         override fun getItemViewType(position: Int): Int {
-            return if (position == 0)
-                VIEW_TYPE_HEADER
-            else
-                VIEW_TYPE_MOTM
+            return if (position == 0) VIEW_TYPE_HEADER else VIEW_TYPE_MONTH
         }
 
-        init {
-            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)
-            background = typedValue.resourceId
-        }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            if (background == 0) {
+                val typedValue = TypedValue()
+                parent.context.theme.resolveAttribute(
+                    android.R.attr.selectableItemBackground,
+                    typedValue,
+                    true
+                )
+                background = typedValue.resourceId
+            }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-            var layoutId = R.layout.fastscroll_list_item_motm
-            if (viewType == VIEW_TYPE_HEADER) {
-                layoutId = R.layout.fastscroll_list_item_header
+            val layoutId = if (viewType == VIEW_TYPE_HEADER) {
+                R.layout.fastscroll_list_item_header
+            } else {
+                R.layout.fastscroll_list_item_motm
             }
 
             val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
             view.setBackgroundResource(background)
-            return ViewHolder(view, viewType)
-        }
 
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-            if (position == 0) {
-                val spannedString = Html.fromHtml(
-                    "<strong><big>"
-                            + "FAST SCROLL"
-                            + "</big></strong><br><i>"
-                )
-
-                holder.textViewHeader.text = spannedString
+            return if (viewType == VIEW_TYPE_HEADER) {
+                HeaderViewHolder(view)
             } else {
-                holder.textView.text = monthList[position-1]
+                MonthViewHolder(view)
             }
-
         }
 
-        override fun getItemCount(): Int {
-            return monthList.size+1  // add one for the header of the list
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            when (holder) {
+                is HeaderViewHolder -> holder.bind()
+                is MonthViewHolder -> holder.bind(monthList[position - 1])
+            }
         }
-    }
-    companion object {
-        private const val VIEW_TYPE_HEADER = 0
-        private const val VIEW_TYPE_MOTM = 1
+
+        override fun getItemCount(): Int = monthList.size + 1
+
+        private class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            private val textView: TextView = itemView.findViewById(R.id.columnheader)
+
+            fun bind() {
+                val htmlText = "<strong><big>FAST SCROLL</big></strong><br><i>"
+                textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
+                } else {
+                    @Suppress("DEPRECATION")
+                    Html.fromHtml(htmlText)
+                }
+            }
+        }
+
+        private class MonthViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            private val textView: TextView = itemView.findViewById(R.id.monthtext)
+
+            fun bind(month: String) {
+                textView.text = month
+            }
+        }
+
+        companion object {
+            private const val VIEW_TYPE_HEADER = 0
+            private const val VIEW_TYPE_MONTH = 1
+        }
     }
 }

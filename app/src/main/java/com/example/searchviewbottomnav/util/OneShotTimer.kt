@@ -11,27 +11,33 @@
  *  limitations under the License
  */
 
-@file:Suppress("unused")
-
 package com.example.searchviewbottomnav.util
 
-import android.content.Context
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
+class OneShotTimer {
 
-class OneShotTimer(context: Context) {
-
-    private val oneShotTimerJob = Job()
+    private val timerJob = SupervisorJob()
+    private val timerScope = CoroutineScope(Dispatchers.IO + timerJob)
     private val mutex = Mutex()
-    private var countDownTime = 0 // milliseconds
+    private var countDownTime = 0
     var isRunning = false
+        private set
     private var wasCancelled = false
+    private var callback: Callback? = null
 
     fun setTimerValue(t: Int) = runBlocking {
-        GlobalScope.launch(Dispatchers.IO + oneShotTimerJob) {
+        timerScope.launch {
             if (countDownTime < 0) {
                 Timber.e("No NEGATIVE times please")
             } else {
@@ -48,19 +54,17 @@ class OneShotTimer(context: Context) {
             isRunning = true
         }
         wasCancelled = false
-        GlobalScope.launch(Dispatchers.IO + oneShotTimerJob) {
+        timerScope.launch {
             while (countDownTime > 0) {
-                delay(500L)
+                delay(TICK_INTERVAL)
                 mutex.withLock {
-                    countDownTime -= 500
-                    //Timber.v("TIME IS $countDownTime")
+                    countDownTime -= TICK_INTERVAL.toInt()
                 }
             }
 
             if (!wasCancelled) {
                 try {
-                    // Timber.e("CALLING CALLBACK")
-                    MainScope().launch {
+                    withContext(Dispatchers.Main) {
                         callback?.timerFinished()
                     }
                 } catch (e: Exception) {
@@ -75,7 +79,7 @@ class OneShotTimer(context: Context) {
 
     fun cancelTimer() {
         wasCancelled = true
-        oneShotTimerJob.cancel()
+        timerJob.cancel()
         isRunning = false
     }
 
@@ -87,5 +91,7 @@ class OneShotTimer(context: Context) {
         fun timerFinished()
     }
 
-    private var callback: Callback? = null
+    companion object {
+        private const val TICK_INTERVAL = 500L
+    }
 }

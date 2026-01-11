@@ -11,11 +11,7 @@
  *  limitations under the License
  */
 
-@file:Suppress("UnnecessaryVariable")
-
 package com.example.searchviewbottomnav
-
-import java.util.*
 
 object Fruits {
     data class FruitNameImage(val name: String, val imageurl: String)
@@ -49,9 +45,8 @@ object Fruits {
      * where the name contains the search string
      */
     fun searchFruit(searchTerm: String): List<FruitNameImage> {
-        val s = searchTerm.toLowerCase(Locale.ROOT)
-        val match = fruitList.filter { it.name.toLowerCase(Locale.ROOT).contains(s) }
-        return match
+        val searchLower = searchTerm.lowercase()
+        return fruitList.filter { it.name.lowercase().contains(searchLower) }
     }
 
     fun getUrl(searchTerm: String): String {
