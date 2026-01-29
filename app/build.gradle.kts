@@ -26,12 +26,14 @@ val versionBuild = 13
 
 android {
     namespace = "com.example.searchviewbottomnav"
-    compileSdk = 36
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
         applicationId = "com.example.searchviewbottomnav"
-        minSdk = 23
-        targetSdk = 35
+        minSdk = 24
+        targetSdk = 36
         versionCode =
             versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
         versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
@@ -47,33 +49,27 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            isMinifyEnabled = false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
         viewBinding = true
         buildConfig = true
     }
+}
 
-    lint {
-        disable += listOf(
-            "StaticFieldLeak",
-            "UseCompoundDrawables",
-            "Autofill",
-            "UnusedResources",
-            "ObsoleteLintCustomCheck",
-            "IconLauncherShape"
-        )
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_11
-        }
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
+
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.core.ktx)
